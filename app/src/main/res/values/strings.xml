@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">SchoolCourseHub</string>
+    <string name="app_name">School Course Hub</string>
+    <string name="login_btn">Log in</string>
+    <string name="register_btn">Register</string>
+    <string name="login_title">Log in</string>
+    <string name="register_title">Register</string>
 </resources>
