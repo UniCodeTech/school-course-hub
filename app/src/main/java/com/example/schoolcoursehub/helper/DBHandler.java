@@ -119,6 +119,21 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_USER_ROLE + " TEXT"
                 + ")";
         db.execSQL(CREATE_USERS_TABLE);
+        // Add admin user
+        ContentValues adminValues = new ContentValues();
+        adminValues.put(COLUMN_USER_NAME, "Admin");
+        adminValues.putNull(COLUMN_USER_ADDRESS);
+        adminValues.putNull(COLUMN_USER_LIVING_CITY);
+        adminValues.putNull(COLUMN_USER_DATE_OF_BIRTH);
+        adminValues.putNull(COLUMN_USER_NIC);
+        adminValues.put(COLUMN_USER_EMAIL_ADDRESS, "admin");
+        adminValues.putNull(COLUMN_USER_GENDER);
+        adminValues.putNull(COLUMN_USER_MOBILE_NUMBER);
+        adminValues.put(COLUMN_USER_PASSWORD, "admin");
+        adminValues.putNull(COLUMN_USER_PROFILE_PICTURE);
+        adminValues.put(COLUMN_USER_ROLE, "Admin");
+        db.insert(TABLE_USERS, null, adminValues);
+
 
         // Create the Course Registration table
         String CREATE_COURSE_USERS_TABLE = "CREATE TABLE " + TABLE_COURSE_USERS + "("
