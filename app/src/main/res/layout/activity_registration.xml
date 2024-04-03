@@ -147,10 +147,16 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="12dp"/>
 
-            <!-- Add more EditTexts as needed -->
-
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="Error message goes here"
+        android:layout_marginTop="8dp"/>
 
     <!-- Register Button -->
     <Button
@@ -160,14 +166,7 @@
         android:text="Register"
         android:textColor="@color/white"
         android:background="@drawable/custom_button"
-        android:layout_marginTop="24dp"/>
-
-    <TextView
-        android:id="@+id/errorTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/red"
-        android:text="Error message goes here"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="24dp"/>
 
 </LinearLayout>

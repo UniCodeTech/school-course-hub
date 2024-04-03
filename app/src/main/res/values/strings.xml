@@ -6,6 +6,7 @@
     <string name="register_title">Register</string>
     <string name="admin_login_title">Admin Log In</string>
     <string name="email_hint">Email</string>
+    <string name="admin_login_text">Are you Admin? Click Here</string>
 
 
     <string name="spinner_hint">Select gender</string>
