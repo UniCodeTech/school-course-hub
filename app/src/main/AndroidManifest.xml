@@ -2,9 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Adding permissions to access the storage -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -17,10 +20,14 @@
         android:theme="@style/Theme.SchoolCourseHub"
         tools:targetApi="31">
         <activity
-            android:name=".signupandlogin.AdminLoginActivity"
-            android:parentActivityName=".signupandlogin.LoginActivity"
-            android:label="@string/admin_login_title"
+            android:name=".admin.AdminHome"
+            android:label="@string/admin_home"
             android:exported="false" />
+        <activity
+            android:name=".signupandlogin.AdminLoginActivity"
+            android:exported="false"
+            android:label="@string/admin_login_title"
+            android:parentActivityName=".signupandlogin.LoginActivity" />
         <activity
             android:name=".signupandlogin.LoginActivity"
             android:exported="false"

@@ -2,6 +2,7 @@ package com.example.schoolcoursehub.signupandlogin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText;
     private Button loginButton;
     private TextView error;
+
+    private TextView adminLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         loginButton = findViewById(R.id.loginButton);
         error = findViewById(R.id.error);
+        adminLogin = findViewById(R.id.adminLogin);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +42,16 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 // TODO: implement email verify logic
+            }
+        });
+
+        // Open AdminLoginActivity
+        adminLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open the new activity here
+                Intent intent = new Intent(LoginActivity.this, AdminLoginActivity.class);
+                startActivity(intent);
             }
         });
     }
