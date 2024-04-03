@@ -93,6 +93,15 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_LONGITUDE + " REAL"
                 + ")";
         db.execSQL(CREATE_BRANCH_TABLE);
+        // Insert 8 branches details
+        insertBranch(db, "Colombo", 6.9063005, 79.8682518);
+        insertBranch(db, "Matara", 5.9492564, 80.5437563);
+        insertBranch(db, "Kandy", 7.2871104, 80.5913717);
+        insertBranch(db, "Negombo", 7.2040113, 79.850386);
+        insertBranch(db, "Jafna", 9.6668384, 80.0070977);
+        insertBranch(db, "Kegalle", 7.2495909, 80.3405299);
+        insertBranch(db, "Piliyandala", 6.7997972, 79.9213416);
+        insertBranch(db, "Kottawa", 6.8413356, 79.9621716);
 
         // Create the Users table
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
@@ -124,6 +133,14 @@ public class DBHandler extends SQLiteOpenHelper {
                 + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USERID + ")"
                 + ")";
         db.execSQL(CREATE_COURSE_USERS_TABLE);
+    }
+
+    private void insertBranch(SQLiteDatabase db, String branchName, double latitude, double longitude) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_BRANCH_NAME, branchName);
+        values.put(COLUMN_LATITUDE, latitude);
+        values.put(COLUMN_LONGITUDE, longitude);
+        db.insert(TABLE_BRANCH, null, values);
     }
 
     @Override
