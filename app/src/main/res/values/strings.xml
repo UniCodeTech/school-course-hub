@@ -5,4 +5,12 @@
     <string name="login_title">Log in</string>
     <string name="register_title">Register</string>
     <string name="admin_login_title">Admin Log In</string>
+    <string name="email_hint">Email</string>
+
+
+    <string name="spinner_hint">Select gender</string>
+    <string-array name="spinnerGender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>
