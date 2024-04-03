@@ -11,79 +11,194 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "schoolcoursehub-db";
     private static final int DB_VERSION = 1; // database version
 
-    private static final String TABLE_NAME = "user_details";
+    // Creating Courses table Variables
+    private static final String TABLE_COURSE = "course";
+    private static final String COLUMN_COURSE_ID = "course_id";
+    private static final String COLUMN_COURSE_NAME = "course_name";
+    private static final String COLUMN_COURSE_COST = "course_cost";
+    private static final String COLUMN_COURSE_DURATION = "course_duration";
+    private static final String COLUMN_COURSE_MAX_PARTICIPANTS = "max_participants";
+    private static final String COLUMN_COURSE_STARTING_DATE = "starting_date";
+    private static final String COLUMN_COURSE_REGISTRATION_CLOSING_DATE = "registration_closing_date";
+    private static final String COLUMN_COURSE_PUBLISH_DATE = "publish_date";
+    private static final String COLUMN_COURSE_BRANCH_ID = "course_branch_id";
 
-    // below variable is for our id column.
-    private static final String ID_COL = "id";
+    // Creating Branch table Variables
+    private static final String TABLE_BRANCH = "branch";
+    private static final String COLUMN_BRANCH_ID = "branch_id";
+    private static final String COLUMN_BRANCH_NAME = "branch_name";
 
-    // below variable is for name column
-    private static final String NAME_COL = "name";
+    // Creating Users table Variables
+    private static final String TABLE_USERS = "users";
+    private static final String COLUMN_USER_NIC = "user_nic";
+    private static final String COLUMN_USER_NAME = "user_name";
+    private static final String COLUMN_USER_ADDRESS = "user_address";
+    private static final String COLUMN_USER_LIVING_CITY = "user_living_city";
+    private static final String COLUMN_USER_DATE_OF_BIRTH = "user_date_of_birth";
+    private static final String COLUMN_USER_EMAIL_ADDRESS = "user_email_address";
+    private static final String COLUMN_USER_GENDER = "user_gender";
+    private static final String COLUMN_USER_MOBILE_NUMBER = "user_mobile_number";
+    private static final String COLUMN_USER_PASSWORD = "user_password";
+    private static final String COLUMN_USER_PROFILE_PICTURE = "user_profile_picture";
 
-    // below variable id for age column.
-    private static final String AGE_COL = "age";
+    // Create Course Registration Table Variables
+    private static final String TABLE_COURSE_USERS = "course_users";
+    private static final String COLUMN_COURSE_USER_ID = "course_user_id";
+    private static final String COLUMN_COURSE_NO = "course_no";
+    private static final String COLUMN_USER_ID = "user_id";
+    private static final String COLUMN_USER_REGISTRATION_DATE = "user_register_date";
+    private static final String COLUMN_PROMOTION_CODE = "promtion_code";
+    private static final String COLUMN_DISCOUNT = "discount";
+    private static final String COLUMN_TOTAL_FEE = "discounted_price";
 
-    // below variable for address column.
-    private static final String ADDRESS_COL = "address";
-
-    // below variable is for email column.
-    private static final String EMAIL_COL = "email";
+    // Create User Location Table Variables
+    private static final String TABLE_BRANCH_LOCATIONS = "branch_locations";
+    private static final String COLUMN_LOCATION_ID = "location_id";
+    private static final String COLUMN_BRANCH_NO = "branch_no";
+    private static final String COLUMN_LATITUDE = "latitude";
+    private static final String COLUMN_LONGITUDE = "longitude";
 
     // creating a constructor for our database handler.
     public DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+
     }
 
-    // below method is for creating a database by running a sqlite query
+    // creating a database tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // on below line we are creating
-        // an sqlite query and we are
-        // setting our column names
-        // along with their data types.
-        String query = "CREATE TABLE " + TABLE_NAME + " ("
-                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + NAME_COL + " TEXT,"
-                + AGE_COL + " TEXT,"
-                + ADDRESS_COL + " TEXT,"
-                + EMAIL_COL + " TEXT)";
 
-        // at last we are calling a exec sql
-        // method to execute above sql query
-        db.execSQL(query);
-    }
+        // Create the courses table
+        String CREATE_COURSE_TABLE = "CREATE TABLE " + TABLE_COURSE + "("
+                + COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_COURSE_NAME + " TEXT,"
+                + COLUMN_COURSE_COST + " REAL,"
+                + COLUMN_COURSE_DURATION + " TEXT,"
+                + COLUMN_COURSE_MAX_PARTICIPANTS + " INTEGER"
+                + COLUMN_COURSE_STARTING_DATE + " TEXT"
+                + COLUMN_COURSE_REGISTRATION_CLOSING_DATE + " TEXT"
+                + COLUMN_COURSE_PUBLISH_DATE + " TEXT"
+                + COLUMN_COURSE_BRANCH_ID + "TEXT"
+                + "FOREIGN KEY (" + COLUMN_COURSE_BRANCH_ID + ") REFERENCES " + TABLE_BRANCH + "(" + COLUMN_BRANCH_ID
+                + "),"
+                + ")";
+        db.execSQL(CREATE_COURSE_TABLE);
 
-    // this method is use to add new course to our sqlite database.
-    public void addNewCourse(String name, String age, String address, String email) {
+        // Create the Branch table
+        String CREATE_BRANCH_TABLE = "CREATE TABLE " + TABLE_BRANCH + "("
+                + COLUMN_BRANCH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_BRANCH_NAME + " TEXT,"
+                + ")";
+        db.execSQL(CREATE_BRANCH_TABLE);
 
-        // on below line we are creating a variable for
-        // our sqlite database and calling writable method
-        // as we are writing data in our database.
-        SQLiteDatabase db = this.getWritableDatabase();
+        // Create the Users table
+        String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
+                + COLUMN_USER_NIC + " TEXT PRIMARY KEY,"
+                + COLUMN_USER_NAME + " TEXT,"
+                + COLUMN_USER_ADDRESS + " TEXT,"
+                + COLUMN_USER_LIVING_CITY + " TEXT,"
+                + COLUMN_USER_DATE_OF_BIRTH + " TEXT,"
+                + COLUMN_USER_EMAIL_ADDRESS + " TEXT,"
+                + COLUMN_USER_GENDER + " TEXT,"
+                + COLUMN_USER_MOBILE_NUMBER + " TEXT,"
+                + COLUMN_USER_PASSWORD + " TEXT,"
+                + COLUMN_USER_PROFILE_PICTURE + " TEXT"
+                + ")";
+        db.execSQL(CREATE_USERS_TABLE);
 
-        // on below line we are creating a
-        // variable for content values.
-        ContentValues values = new ContentValues();
+        // create the Course Registration table
+        String CREATE_COURSE_USERS_TABLE = "CREATE TABLE " + TABLE_COURSE_USERS + "("
+                + COLUMN_COURSE_USER_ID + "INTEGER PRIMARY KEY AUTOINCREMENT"
+                + COLUMN_COURSE_NO + " INTEGER,"
+                + COLUMN_USER_ID + " TEXT,"
+                + COLUMN_USER_REGISTRATION_DATE + " TEXT,"
+                + COLUMN_PROMOTION_CODE + "TEXT"
+                + COLUMN_DISCOUNT + "REAL"
+                + COLUMN_TOTAL_FEE + "REAL"
+                + "FOREIGN KEY (" + COLUMN_COURSE_NO + ") REFERENCES " + TABLE_COURSE + "(" + COLUMN_COURSE_ID + "),"
+                + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_NIC + ")"
+                + ")";
 
-        // on below line we are passing all values
-        // along with its key and value pair.
-        values.put(NAME_COL, name);
-        values.put(AGE_COL, age);
-        values.put(ADDRESS_COL, address);
-        values.put(EMAIL_COL, email);
-
-        // after adding all values we are passing
-        // content values to our table.
-        db.insert(TABLE_NAME, null, values);
-
-        // at last we are closing our
-        // database after adding database.
-        db.close();
+        // Create Location Table
+        String CREATE_BRANCH_LOCATIONS_TABLE = "CREATE TABLE " + TABLE_BRANCH_LOCATIONS + "("
+                + COLUMN_LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_BRANCH_NO + " INTEGER,"
+                + COLUMN_LATITUDE + " REAL,"
+                + COLUMN_LONGITUDE + " REAL"
+                + "FOREIGN KEY (" + COLUMN_BRANCH_NO + ") REFERENCES " + TABLE_BRANCH + "(" + COLUMN_BRANCH_ID
+                + "),"
+                + ")";
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // this method is called to check if the table exists already.
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        // Drop older table if existed and create fresh
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
         onCreate(db);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BRANCH);
+        onCreate(db);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        onCreate(db);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE_USERS);
+        onCreate(db);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BRANCH_LOCATIONS);
+        onCreate(db);
+    }
+
+    // Add a new course
+    public long addCourse(String courseName, float courseCost, String courseDuration, int maxParticipants,
+            String courseStartDate, String courseRegistrationCloseDate, String publishDate, String courseBranchId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_COURSE_NAME, courseName);
+        values.put(COLUMN_COURSE_COST, courseCost);
+        values.put(COLUMN_COURSE_DURATION, courseDuration);
+        values.put(COLUMN_COURSE_MAX_PARTICIPANTS, maxParticipants);
+        values.put(COLUMN_COURSE_STARTING_DATE, courseStartDate);
+        values.put(COLUMN_COURSE_REGISTRATION_CLOSING_DATE, courseRegistrationCloseDate);
+        values.put(COLUMN_COURSE_PUBLISH_DATE, publishDate);
+        values.put(COLUMN_COURSE_BRANCH_ID, courseBranchId);
+        long newRowId = db.insert(TABLE_COURSE, null, values);
+        db.close();
+        return newRowId;
+    }
+
+    // Get all courses
+    public Cursor getAllCourses() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_COURSE, null, null, null, null, null, null);
+        return cursor;
+    }
+
+    // Update course
+    public int updateCourse(long courseId, String courseName, float courseCost, String courseDuration,
+            int maxParticipants, String courseStartDate, String courseRegistrationCloseDate, String publishDate,
+            String courseBranchId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_COURSE_NAME, courseName);
+        values.put(COLUMN_COURSE_COST, courseCost);
+        values.put(COLUMN_COURSE_DURATION, courseDuration);
+        values.put(COLUMN_COURSE_MAX_PARTICIPANTS, maxParticipants);
+        values.put(COLUMN_COURSE_STARTING_DATE, courseStartDate);
+        values.put(COLUMN_COURSE_REGISTRATION_CLOSING_DATE, courseRegistrationCloseDate);
+        values.put(COLUMN_COURSE_PUBLISH_DATE, publishDate);
+        values.put(COLUMN_COURSE_BRANCH_ID, courseBranchId);
+        int rowsAffected = db.update(TABLE_COURSE, values, COLUMN_COURSE_ID + " = ?",
+                new String[] { String.valueOf(courseId) });
+        db.close();
+        return rowsAffected;
+    }
+
+    // Delete course
+    public int deleteCourse(long courseId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(TABLE_COURSE, COLUMN_COURSE_ID + " = ?", new String[] { String.valueOf(courseId) });
+        db.close();
+        return rowsDeleted;
     }
 }
