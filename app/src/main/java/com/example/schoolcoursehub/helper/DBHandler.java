@@ -252,13 +252,13 @@ public class DBHandler extends SQLiteOpenHelper {
         String[] selectionArgs = {email, password};
 
         Cursor cursor = db.query(
-                TABLE_USERS,            // The table to query
-                null,                   // The array of columns to return (null means all columns)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                null                    // don't sort the rows
+                TABLE_USERS,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
         );
 
         boolean isLoggedIn = cursor != null && cursor.getCount() > 0;

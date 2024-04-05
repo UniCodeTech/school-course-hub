@@ -14,6 +14,7 @@ import com.example.schoolcoursehub.R;
 import com.example.schoolcoursehub.admin.AdminHome;
 import com.example.schoolcoursehub.helper.DBHandler;
 import com.example.schoolcoursehub.helper.UserInfo;
+import com.example.schoolcoursehub.user.UserHome;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView error;
 
-    private TextView adminLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +74,10 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (role.equals("User")) {
                         System.out.println("User");
                         Toast.makeText(LoginActivity.this, "Login Successful.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, UserHome.class);
+                        intent.putExtra("userId", userId);
+                        startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Try Again Later!", Toast.LENGTH_SHORT).show();
                         emailEditText.setText("");
@@ -92,5 +96,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public boolean login(String email, String password){
         return dbHandler.login(email, password);
+    }
+
+    public void onLoginClicked(View view) {
+        System.out.println("onLoginClicked");
+        Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
