@@ -10,6 +10,7 @@
     <string name="admin_login_title">Admin Log In</string>
     <string name="register_text">Don\'t have an account? Register here.</string>
     <string name="admin_home">Admin Dashboard</string>
+    <string name="add_new_course">Add New Course</string>
 
 
     <string name="spinner_hint">Select gender</string>

@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DBHandler extends SQLiteOpenHelper {
 
     // creating a constant variables for our database.
@@ -165,6 +168,41 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
     }
+
+    // get all branch data
+    public List<String> getAllBranchNames() {
+        List<String> branchNames = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            String[] projection = { COLUMN_BRANCH_NAME };
+            cursor = db.query(
+                    TABLE_BRANCH,         // The table to query
+                    projection,           // The columns to return
+                    null,                 // The columns for the WHERE clause
+                    null,                 // The values for the WHERE clause
+                    null,                 // don't group the rows
+                    null,                 // don't filter by row groups
+                    null                  // don't sort the rows
+            );
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    String branchName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_NAME));
+                    branchNames.add(branchName);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return branchNames;
+    }
+
 
     private void insertBranch(SQLiteDatabase db, String branchName, double latitude, double longitude) {
         ContentValues values = new ContentValues();

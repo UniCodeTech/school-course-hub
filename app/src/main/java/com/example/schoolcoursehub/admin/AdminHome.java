@@ -3,11 +3,14 @@ package com.example.schoolcoursehub.admin;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.schoolcoursehub.R;
+import com.example.schoolcoursehub.signupandlogin.LoginActivity;
+import com.example.schoolcoursehub.user.UserHome;
 
 public class AdminHome extends AppCompatActivity {
 
@@ -43,12 +46,16 @@ public class AdminHome extends AppCompatActivity {
 
     // TODO: implement below functions
     private void addNewCourse() {
-
+        System.out.println("Add New Course Clicked");
+        Intent intent = new Intent(AdminHome.this, AddNewCourse.class);
+        startActivity(intent);
     }
 
     private void viewUserList() {
+        System.out.println("View User Clicked");
     }
 
     private void addBranch() {
+        System.out.println("Add Branch Clicked");
     }
 }
