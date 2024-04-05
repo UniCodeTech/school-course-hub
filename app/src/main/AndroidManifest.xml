@@ -20,9 +20,12 @@
         android:theme="@style/Theme.SchoolCourseHub"
         tools:targetApi="31">
         <activity
-            android:name=".admin.AdminHome"
-            android:label="@string/admin_home"
+            android:name=".user.UserHome"
             android:exported="false" />
+        <activity
+            android:name=".admin.AdminHome"
+            android:exported="false"
+            android:label="@string/admin_home" />
         <activity
             android:name=".signupandlogin.AdminLoginActivity"
             android:exported="false"
