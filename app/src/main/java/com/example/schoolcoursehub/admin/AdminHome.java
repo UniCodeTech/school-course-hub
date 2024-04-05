@@ -15,6 +15,10 @@ public class AdminHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
+
+        int userId = getIntent().getIntExtra("userId", -1);
+
+        System.out.println("Admin Home Opened. UserID: "+userId);
     }
 
     @Override

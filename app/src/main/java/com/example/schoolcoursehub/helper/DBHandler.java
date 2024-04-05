@@ -244,6 +244,68 @@ public class DBHandler extends SQLiteOpenHelper {
         return isUnique;
     }
 
+    // login
+    public boolean login(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = COLUMN_USER_EMAIL_ADDRESS + " = ? AND " + COLUMN_USER_PASSWORD + " = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query(
+                TABLE_USERS,            // The table to query
+                null,                   // The array of columns to return (null means all columns)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                null                    // don't sort the rows
+        );
+
+        boolean isLoggedIn = cursor != null && cursor.getCount() > 0;
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        db.close();
+
+        return isLoggedIn;
+    }
+
+    public UserInfo getUserInfo(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        UserInfo userInfo = new UserInfo(); // Class to hold user ID and role
+        Cursor cursor = null;
+
+        try {
+            String[] projection = { COLUMN_USERID, COLUMN_USER_ROLE };
+            String selection = COLUMN_USER_EMAIL_ADDRESS + " = ? AND " + COLUMN_USER_PASSWORD + " = ?";
+            String[] selectionArgs = { email, password };
+
+            cursor = db.query(
+                    TABLE_USERS,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null
+            );
+
+            if (cursor != null && cursor.moveToFirst()) {
+                userInfo.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USERID)));
+                userInfo.setRole(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ROLE)));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return userInfo;
+    }
+
+
 
 
     // Add a new course
