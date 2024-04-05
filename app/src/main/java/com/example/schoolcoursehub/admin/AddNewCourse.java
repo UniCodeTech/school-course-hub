@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.schoolcoursehub.R;
 import com.example.schoolcoursehub.helper.DBHandler;
@@ -14,6 +17,10 @@ import com.example.schoolcoursehub.helper.DBHandler;
 import java.util.List;
 
 public class AddNewCourse extends AppCompatActivity {
+    private EditText courseNameEditText, courseCostEditText, courseDurationEditText,
+            maxParticipantsEditText, startingDateEditText, registrationClosingDateEditText;
+    private Button registerButton;
+    private TextView errorTextView;
     private Spinner branchSpinner;
     private DBHandler dbHandler;
 
@@ -22,9 +29,18 @@ public class AddNewCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_course);
 
-        System.out.println("*** Add New Course Opened ***");
+        dbHandler = new DBHandler(this);    // database
+        courseNameEditText = findViewById(R.id.courseNameEditText);
+        courseCostEditText = findViewById(R.id.courseCostEditText);
+        courseDurationEditText = findViewById(R.id.courseDurationEditText);
+        maxParticipantsEditText = findViewById(R.id.maxParticipantsEditText);
+        startingDateEditText = findViewById(R.id.startingDateEditText);
+        registrationClosingDateEditText = findViewById(R.id.registrationClosingDateEditText);
 
-        dbHandler = new DBHandler(this);
+        registerButton = findViewById(R.id.registerButton);
+
+        errorTextView = findViewById(R.id.errorTextView);
+
         branchSpinner = findViewById(R.id.branchSpinner);
 
         // get all branch details

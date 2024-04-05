@@ -13,7 +13,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // creating a constant variables for our database.
     private static final String DB_NAME = "schoolcoursehub-db";
-    private static final int DB_VERSION = 1; // database version
+    private static final int DB_VERSION = 2; // database version
 
 
     // Creating Courses table Variables
@@ -26,6 +26,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_COURSE_STARTING_DATE = "starting_date";
     private static final String COLUMN_COURSE_REGISTRATION_CLOSING_DATE = "registration_closing_date";
     private static final String COLUMN_COURSE_PUBLISH_DATE = "publish_date";
+    private static final String COLUMN_CURRENT_ENROLLMENT = "current_enrollment";
     private static final String COLUMN_COURSE_BRANCH_ID = "course_branch_id";
 
 
@@ -90,6 +91,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_COURSE_STARTING_DATE + " TEXT, "
                 + COLUMN_COURSE_REGISTRATION_CLOSING_DATE + " TEXT, "
                 + COLUMN_COURSE_PUBLISH_DATE + " TEXT, "
+                + COLUMN_CURRENT_ENROLLMENT + " INTEGER DEFAULT 0, "
                 + COLUMN_COURSE_BRANCH_ID + " TEXT, "
                 + "FOREIGN KEY (" + COLUMN_COURSE_BRANCH_ID + ") REFERENCES " + TABLE_BRANCH + "(" + COLUMN_BRANCH_ID + ")"
                 + ")";
@@ -169,6 +171,30 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public void updateCourseTable(SQLiteDatabase db) {
+        System.out.println("** ** ** updateCourseTable **");
+        String CREATE_COURSE_TABLE_NEW = "CREATE TABLE " + TABLE_COURSE + "("
+                + COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_COURSE_NAME + " TEXT, "
+                + COLUMN_COURSE_COST + " REAL, "
+                + COLUMN_COURSE_DURATION + " TEXT, "
+                + COLUMN_COURSE_MAX_PARTICIPANTS + " INTEGER, "
+                + COLUMN_COURSE_STARTING_DATE + " TEXT, "
+                + COLUMN_COURSE_REGISTRATION_CLOSING_DATE + " TEXT, "
+                + COLUMN_COURSE_PUBLISH_DATE + " TEXT, "
+                + COLUMN_COURSE_BRANCH_ID + " TEXT, "
+                + COLUMN_CURRENT_ENROLLMENT + " INTEGER DEFAULT 0, " // New column
+                + "FOREIGN KEY (" + COLUMN_COURSE_BRANCH_ID + ") REFERENCES " + TABLE_BRANCH + "(" + COLUMN_BRANCH_ID + ")"
+                + ")";
+
+        //db.execSQL("ALTER TABLE " + TABLE_COURSE + " RENAME TO temp_" + TABLE_COURSE);
+        db.execSQL(CREATE_COURSE_TABLE_NEW);
+
+        //db.execSQL("INSERT INTO " + TABLE_COURSE + " SELECT * FROM temp_" + TABLE_COURSE);
+        //db.execSQL("DROP TABLE temp_" + TABLE_COURSE);
+    }
+
+
     // get all branch data
     public List<String> getAllBranchNames() {
         List<String> branchNames = new ArrayList<>();
@@ -178,13 +204,13 @@ public class DBHandler extends SQLiteOpenHelper {
         try {
             String[] projection = { COLUMN_BRANCH_NAME };
             cursor = db.query(
-                    TABLE_BRANCH,         // The table to query
-                    projection,           // The columns to return
-                    null,                 // The columns for the WHERE clause
-                    null,                 // The values for the WHERE clause
-                    null,                 // don't group the rows
-                    null,                 // don't filter by row groups
-                    null                  // don't sort the rows
+                    TABLE_BRANCH,
+                    projection,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
             );
 
             if (cursor != null && cursor.moveToFirst()) {
@@ -216,16 +242,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed and create fresh
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
-        onCreate(db);
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BRANCH);
-        onCreate(db);
-
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        onCreate(db);
-
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE_USERS);
-        onCreate(db);
+        // Create the new version of the table
+        updateCourseTable(db);
     }
 
     // insert user
