@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + COLUMN_COURSE_REGISTRATION_CLOSING_DATE + " TEXT, "
                 + COLUMN_COURSE_PUBLISH_DATE + " TEXT, "
                 + COLUMN_CURRENT_ENROLLMENT + " INTEGER DEFAULT 0, "
-                + COLUMN_COURSE_BRANCH_ID + " TEXT, "
+                + COLUMN_COURSE_BRANCH_ID + " INTEGER, "
                 + "FOREIGN KEY (" + COLUMN_COURSE_BRANCH_ID + ") REFERENCES " + TABLE_BRANCH + "(" + COLUMN_BRANCH_ID + ")"
                 + ")";
         db.execSQL(CREATE_COURSE_TABLE);
@@ -243,8 +244,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // Drop older table if existed and create fresh
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
 
-        // Create the new version of the table
-        updateCourseTable(db);
+        System.out.println("*** *** *** DBHandler: onUpgrade()");
     }
 
     // insert user
@@ -363,11 +363,37 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
+    public int getBranchId(String branchName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int branchId = 1;
+
+        String[] projection = {COLUMN_BRANCH_ID};
+        String selection = COLUMN_BRANCH_NAME + " = ?";
+        String[] selectionArgs = {branchName};
+
+        Cursor cursor = db.query(
+                TABLE_BRANCH,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            branchId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_ID));
+            cursor.close();
+        }
+
+        db.close();
+        return branchId;
+    }
 
 
     // Add a new course
     public long addCourse(String courseName, float courseCost, String courseDuration, int maxParticipants,
-            String courseStartDate, String courseRegistrationCloseDate, String publishDate, String courseBranchId) {
+                          String courseStartDate, String courseRegistrationCloseDate, String publishDate, int courseBranchId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_COURSE_NAME, courseName);
@@ -377,11 +403,13 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_COURSE_STARTING_DATE, courseStartDate);
         values.put(COLUMN_COURSE_REGISTRATION_CLOSING_DATE, courseRegistrationCloseDate);
         values.put(COLUMN_COURSE_PUBLISH_DATE, publishDate);
+        values.put(COLUMN_CURRENT_ENROLLMENT, 0);
         values.put(COLUMN_COURSE_BRANCH_ID, courseBranchId);
         long newRowId = db.insert(TABLE_COURSE, null, values);
         db.close();
         return newRowId;
     }
+
 
     // TODO: Get all courses
 

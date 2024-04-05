@@ -76,7 +76,10 @@
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/custom_edit_text_background"
                 android:hint="Starting Date"
-                android:inputType="date"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="text"
                 android:padding="12dp" />
 
             <EditText
@@ -88,7 +91,10 @@
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/custom_edit_text_background"
                 android:hint="Registration Closing Date"
-                android:inputType="date"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="text"
                 android:padding="12dp" />
 
             <Spinner
