@@ -14,7 +14,6 @@ public class UserHome extends AppCompatActivity {
         setContentView(R.layout.activity_user_home);
 
         int userId = getIntent().getIntExtra("userId", -1);
-
         System.out.println("User Home Opened. UserID: "+userId); // check point
     }
 }
