@@ -206,72 +206,86 @@ public class RegistrationActivity extends AppCompatActivity {
         // Validate name
         if (name.isEmpty()) {
             nameEditText.setError("Please enter your name");
+            errorTextView.setText("Please enter your name");
             isValid = false;
         }
 
         // Validate address
-        if (address.isEmpty()) {
+        else if (address.isEmpty()) {
             addressEditText.setError("Please enter your address");
+            errorTextView.setText("Please enter your address");
             isValid = false;
         }
 
         // Validate city
-        if (city.isEmpty()) {
+        else if (city.isEmpty()) {
             cityEditText.setError("Please enter your city");
+            errorTextView.setText("Please enter your city");
             isValid = false;
         }
 
         // Validate date of birth
-        if (dob.isEmpty()) {
+        else if (dob.isEmpty()) {
             dobEditText.setError("Please select your date of birth");
+            errorTextView.setText("Please select your date of birth");
             isValid = false;
         }
 
         // Validate NIC
-        if (nic.isEmpty()) {
+        else if (nic.isEmpty()) {
             nicEditText.setError("Please enter your NIC");
+            errorTextView.setText("Please enter your NIC");
             isValid = false;
         }
 
-        if (idUniqueNIC(nic)){
+        else if (idUniqueNIC(nic)){
             nicEditText.setError("NIC is already taken");
+            errorTextView.setText("NIC is already taken");
             isValid = false;
         }
-        if (selectedGender == null && selectedGender.isEmpty()) {
+        else if (selectedGender == null && selectedGender.isEmpty()) {
+            errorTextView.setText("Please select a gender");
             errorTextView.setText("Please select a gender");
             isValid = false;
         }
 
         // Validate email
-        if (email.isEmpty()) {
+        else if (email.isEmpty()) {
             emailEditText.setError("Please enter your email");
+            errorTextView.setText("Please enter your email");
             isValid = false;
         } else if (!isValidEmail(email)) {
             emailEditText.setError("Please enter a valid email");
+            errorTextView.setText("Please enter a valid email");
             isValid = false;
         }
 
         // Validate phone number
-        if (phone.isEmpty()) {
+        else if (phone.isEmpty()) {
             phoneEditText.setError("Please enter your phone number");
+            errorTextView.setText("Please enter your phone number");
             isValid = false;
         } else if (!isValidPhoneNumber(phone)) {
             phoneEditText.setError("Please enter a valid phone number");
+            errorTextView.setText("Please enter a valid phone number");
             isValid = false;
         }
 
         // Validate password
-        if (password.isEmpty()) {
+        else if (password.isEmpty()) {
             passwordEditText.setError("Please enter a password");
+            errorTextView.setText("Please enter a password");
             isValid = false;
         }
 
         // Validate confirm password
-        if (confirmPassword.isEmpty()) {
+        else if (confirmPassword.isEmpty()) {
             confirmPasswordEditText.setError("Please confirm your password");
+            errorTextView.setText("Please confirm your password");
             isValid = false;
         } else if (!confirmPassword.equals(password)) {
             confirmPasswordEditText.setError("Passwords do not match");
+            errorTextView.setText("Passwords do not match");
             isValid = false;
         }
 

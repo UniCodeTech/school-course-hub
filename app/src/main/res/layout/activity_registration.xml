@@ -182,7 +182,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/red"
-        android:text="Error message goes here"
+        android:text=""
         android:layout_marginTop="8dp"/>
 
     <!-- Register Button -->
