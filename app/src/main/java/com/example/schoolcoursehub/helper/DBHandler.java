@@ -59,6 +59,12 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_DISCOUNT = "discount";
     private static final String COLUMN_TOTAL_FEE = "discounted_price";
 
+    // Promotion Code
+    private static final String TABLE_PROMOTION = "promotion";
+    private static final String PROMOTION_ID = "promotion_id";
+    private static final String PROMOTION_CODE = "promotion_code";
+    private static final String PROMOTION_DISCOUNT = "promotion_discount";
+
 
 
     // creating a constructor for our database handler.
@@ -148,6 +154,15 @@ public class DBHandler extends SQLiteOpenHelper {
                 + "FOREIGN KEY (" + COLUMN_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USERID + ")"
                 + ")";
         db.execSQL(CREATE_COURSE_USERS_TABLE);
+
+        String CREATE_PROMOTION_TABLE = "CREATE TABLE " + TABLE_PROMOTION + "("
+                + PROMOTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + PROMOTION_CODE + " TEXT UNIQUE, "
+                + PROMOTION_DISCOUNT + " REAL"
+                + ")";
+        db.execSQL(CREATE_PROMOTION_TABLE);
+
+
     }
 
     private void insertBranch(SQLiteDatabase db, String branchName, double latitude, double longitude) {
