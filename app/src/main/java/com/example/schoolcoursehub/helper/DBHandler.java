@@ -2,6 +2,7 @@ package com.example.schoolcoursehub.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -188,6 +189,62 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE_USERS);
         onCreate(db);
     }
+
+    // insert user
+    public boolean insertUser(String name, String address, String livingCity, String dateOfBirth, String nic, String emailAddress,
+                               String gender, String mobileNumber, String password, String profilePicture, String role) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_NAME, name);
+        values.put(COLUMN_USER_ADDRESS, address);
+        values.put(COLUMN_USER_LIVING_CITY, livingCity);
+        values.put(COLUMN_USER_DATE_OF_BIRTH, dateOfBirth);
+        values.put(COLUMN_USER_NIC, nic);
+        values.put(COLUMN_USER_EMAIL_ADDRESS, emailAddress);
+        values.put(COLUMN_USER_GENDER, gender);
+        values.put(COLUMN_USER_MOBILE_NUMBER, mobileNumber);
+        values.put(COLUMN_USER_PASSWORD, password);
+        values.put(COLUMN_USER_PROFILE_PICTURE, profilePicture);
+        values.put(COLUMN_USER_ROLE, role);
+
+        long newRowId = db.insert(TABLE_USERS, null, values);
+
+        db.close();
+
+        return newRowId != -1;
+    }
+
+    public boolean isUniqueNIC(String nic) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        boolean isUnique = true;
+
+        try {
+            String[] projection = {COLUMN_USER_NIC};
+
+            String selection = COLUMN_USER_NIC + " = ?";
+            String[] selectionArgs = {nic};
+
+            cursor = db.query(TABLE_USERS, projection, selection, selectionArgs, null, null, null);
+
+            // Check if the cursor has any rows
+            if (cursor != null && cursor.getCount() > 0) {
+                // NIC already exists
+                isUnique = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return isUnique;
+    }
+
+
 
     // Add a new course
     public long addCourse(String courseName, float courseCost, String courseDuration, int maxParticipants,
