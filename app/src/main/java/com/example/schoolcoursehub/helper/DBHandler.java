@@ -487,6 +487,44 @@ public class DBHandler extends SQLiteOpenHelper {
         return userList;
     }
 
+
+    // Method to get all courses from the database
+    public List<Course> getAllCourses() {
+        List<Course> courseList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_COURSE;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Loop through all rows and add to list
+        if (cursor.moveToFirst()) {
+            do {
+                Course course = new Course();
+                course.setCourseId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_ID)));
+                course.setCourseName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NAME)));
+                course.setCourseCost(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COURSE_COST)));
+                course.setCourseDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_DURATION)));
+                course.setMaxParticipants(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_MAX_PARTICIPANTS)));
+                course.setStartingDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_STARTING_DATE)));
+                course.setRegistrationClosingDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_REGISTRATION_CLOSING_DATE)));
+                course.setPublishDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_PUBLISH_DATE)));
+                course.setCurrentEnrollment(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_ENROLLMENT)));
+                course.setBranchId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_BRANCH_ID)));
+
+                // Adding course to list
+                courseList.add(course);
+            } while (cursor.moveToNext());
+        }
+
+        // Close cursor and database connection
+        cursor.close();
+        db.close();
+
+        // Return course list
+        return courseList;
+    }
+
     // Update course
     public int updateCourse(long courseId, String courseName, float courseCost, String courseDuration,
             int maxParticipants, String courseStartDate, String courseRegistrationCloseDate, String publishDate,
