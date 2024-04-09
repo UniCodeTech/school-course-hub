@@ -13,6 +13,7 @@
     <string name="add_new_course">Add New Course</string>
     <string name="view_user_list">User List</string>
     <string name="add_new_branch">Add New Branch</string>
+    <string name="map_view_description">Map view displaying the current location and markers.</string>
 
 
     <string name="spinner_hint">Select gender</string>

@@ -59,5 +59,7 @@ public class AdminHome extends AppCompatActivity {
 
     private void addBranch() {
         System.out.println("Add Branch Clicked");
+        Intent intent = new Intent(AdminHome.this, AddNewBranch.class);
+        startActivity(intent);
     }
 }
