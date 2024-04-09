@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
@@ -412,6 +413,61 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
     // TODO: Get all courses
+    public List<String> getAllUsers() {
+        List<String> userList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            String[] projection = {
+                    COLUMN_USER_NAME,
+                    COLUMN_USER_ADDRESS,
+                    COLUMN_USER_LIVING_CITY,
+                    COLUMN_USER_DATE_OF_BIRTH,
+                    COLUMN_USER_NIC,
+                    COLUMN_USER_EMAIL_ADDRESS,
+                    COLUMN_USER_GENDER,
+                    COLUMN_USER_MOBILE_NUMBER
+            };
+
+            // Filter results WHERE user_role != 'Admin'
+            String selection = COLUMN_USER_ROLE + " != ?";
+            String[] selectionArgs = { "Admin" };
+
+            cursor = db.query(
+                    TABLE_USERS,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null
+            );
+
+            // Loop through all rows and add user details to the list
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    String userDetails = "Name: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)) + "\n" +
+                            "Address: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ADDRESS)) + "\n" +
+                            "Living City: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_LIVING_CITY)) + "\n" +
+                            "Date of Birth: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_DATE_OF_BIRTH)) + "\n" +
+                            "NIC: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NIC)) + "\n" +
+                            "Email: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_EMAIL_ADDRESS)) + "\n" +
+                            "Gender: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_GENDER)) + "\n" +
+                            "Mobile Number: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_MOBILE_NUMBER));
+
+                    userList.add(userDetails);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return userList;
+    }
 
     // Update course
     public int updateCourse(long courseId, String courseName, float courseCost, String courseDuration,

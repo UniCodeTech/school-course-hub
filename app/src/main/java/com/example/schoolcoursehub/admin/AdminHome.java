@@ -53,6 +53,8 @@ public class AdminHome extends AppCompatActivity {
 
     private void viewUserList() {
         System.out.println("View User Clicked");
+        Intent intent = new Intent(AdminHome.this, ViewUserList.class);
+        startActivity(intent);
     }
 
     private void addBranch() {
