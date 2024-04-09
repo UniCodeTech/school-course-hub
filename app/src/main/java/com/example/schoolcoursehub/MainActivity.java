@@ -4,17 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.schoolcoursehub.helper.DBHandler;
 import com.example.schoolcoursehub.signupandlogin.LoginActivity;
 import com.example.schoolcoursehub.signupandlogin.RegistrationActivity;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
+
+    private DBHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = new DBHandler(this);
+        String DB_NAME = "schoolcoursehub-db";
+        File dbFile = this.getDatabasePath(DB_NAME);
+        if (dbFile.exists()) {
+            Log.d("Database", "Database exists");
+        } else {
+            Log.d("Database", "Database does not exist");
+        }
+
     }
 
     public void onRegisterButtonClick(View view) {

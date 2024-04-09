@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 
 import java.security.PublicKey;
@@ -83,6 +85,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // creating a database tables
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         // Create the courses table
         String CREATE_COURSE_TABLE = "CREATE TABLE " + TABLE_COURSE + "("
                 + COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -108,14 +111,16 @@ public class DBHandler extends SQLiteOpenHelper {
                 + ")";
         db.execSQL(CREATE_BRANCH_TABLE);
         // Insert 8 branches details
-        insertBranch(db, "Colombo", 6.9063005, 79.8682518);
-        insertBranch(db, "Matara", 5.9492564, 80.5437563);
-        insertBranch(db, "Kandy", 7.2871104, 80.5913717);
-        insertBranch(db, "Negombo", 7.2040113, 79.850386);
-        insertBranch(db, "Jafna", 9.6668384, 80.0070977);
-        insertBranch(db, "Kegalle", 7.2495909, 80.3405299);
-        insertBranch(db, "Piliyandala", 6.7997972, 79.9213416);
-        insertBranch(db, "Kottawa", 6.8413356, 79.9621716);
+        boolean x;
+        x = insertBranch(db, "Colombo", 6.9063005, 79.8682518);
+        x = insertBranch(db, "Matara", 5.9492564, 80.5437563);
+        x = insertBranch(db, "Kandy", 7.2871104, 80.5913717);
+        x = insertBranch(db, "Negombo", 7.2040113, 79.850386);
+        x = insertBranch(db, "Jafna", 9.6668384, 80.0070977);
+        x = insertBranch(db, "Kegalle", 7.2495909, 80.3405299);
+        x = insertBranch(db, "Piliyandala", 6.7997972, 79.9213416);
+        x = insertBranch(db, "Kottawa", 6.8413356, 79.9621716);
+
 
         // Create the Users table
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
@@ -170,6 +175,11 @@ public class DBHandler extends SQLiteOpenHelper {
                 + ")";
         db.execSQL(CREATE_PROMOTION_TABLE);
 
+        insertPromotion(db,"M563432", 25.0);
+        insertPromotion(db,"S663435", 40.0);
+        insertPromotion(db,"L763434", 60.0);
+
+        Log.d("DBHandler", "onCreate() called");
 
     }
 
@@ -231,21 +241,29 @@ public class DBHandler extends SQLiteOpenHelper {
         return branchNames;
     }
 
+    private void insertPromotion(SQLiteDatabase db, String promotionCode, double promotionDiscount) {
+        ContentValues values = new ContentValues();
+        values.put(PROMOTION_CODE, promotionCode);
+        values.put(PROMOTION_DISCOUNT, promotionDiscount);
+        db.insert(TABLE_PROMOTION, null, values);
+    }
 
-    private void insertBranch(SQLiteDatabase db, String branchName, double latitude, double longitude) {
+
+    public boolean insertBranch(SQLiteDatabase db, String branchName, double latitude, double longitude) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_BRANCH_NAME, branchName);
         values.put(COLUMN_LATITUDE, latitude);
         values.put(COLUMN_LONGITUDE, longitude);
-        db.insert(TABLE_BRANCH, null, values);
+
+        long result = db.insert(TABLE_BRANCH, null, values);
+
+        return result != -1;
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed and create fresh
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
 
-        System.out.println("*** *** *** DBHandler: onUpgrade()");
     }
 
     // insert user
