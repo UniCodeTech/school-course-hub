@@ -44,9 +44,9 @@ public class AddNewBranch extends AppCompatActivity implements OnMapReadyCallbac
 
         myMap = googleMap;
 
-        LatLng sydney = new LatLng(-34, 151);
-        myMap.addMarker(new MarkerOptions().position(sydney).title("Sydney"));
-        myMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng colombo = new LatLng(6.9271, 79.8612);
+        myMap.addMarker(new MarkerOptions().position(colombo).title("Colombo"));
+        myMap.moveCamera(CameraUpdateFactory.newLatLng(colombo));
 
     }
 
