@@ -21,10 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class AddNewBranch extends AppCompatActivity implements OnMapReadyCallback {
 
-    private MapView mapView;
     private GoogleMap myMap;
-    private EditText branchNameInput;
-    private Button addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +45,6 @@ public class AddNewBranch extends AppCompatActivity implements OnMapReadyCallbac
 
     private void addBranch(String name, double latitude, double longitude) {
         // Insert the new branch into the database
-        //AppDatabase db = AppDatabase.getInstance(this);
-        //Branch branch = new Branch(name, latitude, longitude);
-        //db.branchDao().insert(branch);
-
         // Show a toast message to confirm the branch was added
         Toast.makeText(this, "Branch added successfully", Toast.LENGTH_SHORT).show();
 
