@@ -28,8 +28,16 @@ public class AddNewBranch extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_branch);
 
+        // Initialize the SupportMapFragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(AddNewBranch.this);
+
+        // Ensure mapFragment is not null before calling getMapAsync
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this);
+        } else {
+            // Handle the case where mapFragment is null
+            Toast.makeText(this, "Error initializing map", Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
