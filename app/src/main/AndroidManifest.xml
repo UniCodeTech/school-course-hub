@@ -20,10 +20,13 @@
         android:theme="@style/Theme.SchoolCourseHub"
         tools:targetApi="31">
         <activity
-            android:name=".admin.AddNewCourse"
-            android:label="@string/add_new_course"
-            android:parentActivityName=".admin.AdminHome"
+            android:name=".admin.ViewUserList"
             android:exported="false" />
+        <activity
+            android:name=".admin.AddNewCourse"
+            android:exported="false"
+            android:label="@string/add_new_course"
+            android:parentActivityName=".admin.AdminHome" />
         <activity
             android:name=".user.UserHome"
             android:exported="false" />
