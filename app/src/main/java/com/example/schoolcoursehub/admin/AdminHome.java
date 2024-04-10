@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.schoolcoursehub.R;
 import com.example.schoolcoursehub.helper.Course;
@@ -53,17 +54,18 @@ public class AdminHome extends AppCompatActivity {
             TextView startDateTextView = courseCardView.findViewById(R.id.start_date);
 
             courseNameTextView.setText(course.getCourseName());
-            coursDurationTextView.setText("Duration: " + course.getCourseDuration());
-            maxParticipantTextView.setText("Max Participant: "+course.getMaxParticipants());
-            startDateTextView.setText("Start Date: "+course.getStartingDate());
+            coursDurationTextView.setText("Duration: " + String.valueOf(course.getCourseDuration()));
+            maxParticipantTextView.setText("Max Participant: " + String.valueOf(course.getMaxParticipants()));
+            startDateTextView.setText("Start Date: " + String.valueOf(course.getStartingDate()));
 
 
             // Set click listener for the card
+            final int courseId = course.getCourseId();
             courseCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(AdminHome.this, UpdateCourseActivity.class);
-                    intent.putExtra("courseId", course.getCourseId()); // Pass course ID to update activity
+                    intent.putExtra("courseId", courseId);
                     startActivity(intent);
                 }
             });
@@ -71,6 +73,7 @@ public class AdminHome extends AppCompatActivity {
             courseListLayout.addView(courseCardView);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
