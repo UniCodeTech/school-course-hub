@@ -48,9 +48,15 @@ public class AdminHome extends AppCompatActivity {
             View courseCardView = getLayoutInflater().inflate(R.layout.item_course, null);
 
             TextView courseNameTextView = courseCardView.findViewById(R.id.course_name);
-            courseNameTextView.setText(course.getCourseName());
+            TextView coursDurationTextView = courseCardView.findViewById(R.id.course_duration);
+            TextView maxParticipantTextView = courseCardView.findViewById(R.id.max_participant);
+            TextView startDateTextView = courseCardView.findViewById(R.id.start_date);
 
-            // TODO: Set other course details
+            courseNameTextView.setText(course.getCourseName());
+            coursDurationTextView.setText("Duration: " + course.getCourseDuration());
+            maxParticipantTextView.setText("Max Participant: "+course.getMaxParticipants());
+            startDateTextView.setText("Start Date: "+course.getStartingDate());
+
 
             // Set click listener for the card
             courseCardView.setOnClickListener(new View.OnClickListener() {

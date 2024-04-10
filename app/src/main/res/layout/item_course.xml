@@ -25,6 +25,27 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/course_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/course_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/max_participant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
