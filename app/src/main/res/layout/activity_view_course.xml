@@ -14,10 +14,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
-            android:textSize="18sp"
+            android:layout_marginBottom="12dp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:text="@string/course_overview"
-            android:padding="8dp"/>
+            android:text="@string/course_overview"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Course Name: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView
@@ -56,7 +57,8 @@
                     android:id="@+id/courseCostLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course Cost"
+                    android:text="Course Cost: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView
@@ -75,7 +77,8 @@
                     android:id="@+id/courseDurationLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course Duration"
+                    android:text="Course Duration: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView
@@ -95,6 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Current Enrollment: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView
@@ -113,7 +117,8 @@
                     android:id="@+id/startingDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Starting Date"
+                    android:text="Starting Date: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView
@@ -132,7 +137,8 @@
                     android:id="@+id/registrationClosingDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Registration Closing Date"
+                    android:text="Registration Closing Date: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView
@@ -151,7 +157,8 @@
                     android:id="@+id/publishDateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Publish Date"
+                    android:text="Publish Date: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView
@@ -170,7 +177,8 @@
                     android:id="@+id/branchLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Branch"
+                    android:text="Branch: "
+                    android:textStyle="bold"
                     android:padding="4dp"/>
 
                 <TextView

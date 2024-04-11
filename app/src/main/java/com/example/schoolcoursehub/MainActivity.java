@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ViewCourseActivity.class);
                     intent.putExtra("courseId", courseId);
                     intent.putExtra("courseName", course.getCourseName());
+                    intent.putExtra("branchId", course.getBranchId());
                     startActivity(intent);
                 }
             });

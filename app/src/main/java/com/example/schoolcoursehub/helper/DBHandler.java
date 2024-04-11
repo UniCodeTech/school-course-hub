@@ -241,6 +241,31 @@ public class DBHandler extends SQLiteOpenHelper {
         return branchNames;
     }
 
+    public Branch getBranchById(int branchId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_BRANCH,
+                new String[]{COLUMN_BRANCH_ID, COLUMN_BRANCH_NAME, COLUMN_LATITUDE, COLUMN_LONGITUDE},
+                COLUMN_BRANCH_ID + "=?",
+                new String[]{String.valueOf(branchId)},
+                null, null, null, null);
+
+        Branch branch = null;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                branch = new Branch();
+                branch.setBranchId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_ID)));
+                branch.setBranchName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_NAME)));
+                branch.setLatitude(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LATITUDE)));
+                branch.setLongitude(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LONGITUDE)));
+            }
+            cursor.close();
+        }
+        db.close();
+        return branch;
+    }
+
+
     private void insertPromotion(SQLiteDatabase db, String promotionCode, double promotionDiscount) {
         ContentValues values = new ContentValues();
         values.put(PROMOTION_CODE, promotionCode);
