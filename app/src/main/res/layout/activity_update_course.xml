@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/courseNameEditText"
+                android:id="@+id/updateCourseNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -32,7 +32,7 @@
                 android:padding="12dp" />
 
             <EditText
-                android:id="@+id/courseCostEditText"
+                android:id="@+id/updateCourseCostEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -44,7 +44,7 @@
                 android:padding="12dp" />
 
             <EditText
-                android:id="@+id/courseDurationEditText"
+                android:id="@+id/updateCourseDurationEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -56,7 +56,7 @@
                 android:padding="12dp" />
 
             <EditText
-                android:id="@+id/maxParticipantsEditText"
+                android:id="@+id/updateMaxParticipantsEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -68,7 +68,7 @@
                 android:padding="12dp" />
 
             <EditText
-                android:id="@+id/startingDateEditText"
+                android:id="@+id/updateStartingDateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -83,7 +83,7 @@
                 android:padding="12dp" />
 
             <EditText
-                android:id="@+id/registrationClosingDateEditText"
+                android:id="@+id/updateRegistrationClosingDateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -98,7 +98,7 @@
                 android:padding="12dp" />
 
             <Spinner
-                android:id="@+id/branchSpinner"
+                android:id="@+id/updateBranchSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/custom_edit_text_background"
@@ -121,7 +121,7 @@
 
     <!-- Register Button -->
     <Button
-        android:id="@+id/registerButton"
+        android:id="@+id/updateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/update_course"

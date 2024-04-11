@@ -40,18 +40,20 @@ public class UpdateCourseActivity extends AppCompatActivity {
 
         dbHandler = new DBHandler(this);    // database
 
-        courseNameEditText = findViewById(R.id.courseNameEditText);
-        courseCostEditText = findViewById(R.id.courseCostEditText);
-        courseDurationEditText = findViewById(R.id.courseDurationEditText);
-        maxParticipantsEditText = findViewById(R.id.maxParticipantsEditText);
-        startingDateEditText = findViewById(R.id.startingDateEditText);
-        registrationClosingDateEditText = findViewById(R.id.registrationClosingDateEditText);
+        courseNameEditText = findViewById(R.id.updateCourseNameEditText);
+        courseCostEditText = findViewById(R.id.updateCourseCostEditText);
+        courseDurationEditText = findViewById(R.id.updateCourseDurationEditText);
+        maxParticipantsEditText = findViewById(R.id.updateMaxParticipantsEditText);
+        startingDateEditText = findViewById(R.id.updateStartingDateEditText);
+        registrationClosingDateEditText = findViewById(R.id.updateRegistrationClosingDateEditText);
 
-        registerButton = findViewById(R.id.registerButton);
+        registerButton = findViewById(R.id.updateButton);
 
         errorTextView = findViewById(R.id.errorTextView);
 
-        branchSpinner = findViewById(R.id.branchSpinner);
+        branchSpinner = findViewById(R.id.updateBranchSpinner);
+
+        Toast.makeText(this, "Course ID: "+courseId, Toast.LENGTH_SHORT).show();
 
         /*Course course = dbHandler.fetchCourseDetails(courseId);
 
