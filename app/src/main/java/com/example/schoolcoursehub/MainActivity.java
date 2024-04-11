@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.schoolcoursehub.admin.AdminHome;
 import com.example.schoolcoursehub.helper.DBHandler;
 import com.example.schoolcoursehub.signupandlogin.LoginActivity;
 import com.example.schoolcoursehub.signupandlogin.RegistrationActivity;
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d("Database", "Database does not exist");
         }
+
+        Intent intent = new Intent(MainActivity.this, AdminHome.class);
+        intent.putExtra("userId", 1);
+        startActivity(intent);
 
     }
 

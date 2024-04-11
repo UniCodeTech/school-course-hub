@@ -3,6 +3,9 @@ package com.example.schoolcoursehub.admin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +32,7 @@ public class UpdateCourseActivity extends AppCompatActivity {
 
     private int selectedBranchId;
     private int branchId;
+    private List<Branch> branches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,27 +57,65 @@ public class UpdateCourseActivity extends AppCompatActivity {
 
         branchSpinner = findViewById(R.id.updateBranchSpinner);
 
-        Toast.makeText(this, "Course ID: "+courseId, Toast.LENGTH_SHORT).show();
+        // get course details
+        Course course = dbHandler.fetchCourseDetails(courseId);
 
-        /*Course course = dbHandler.fetchCourseDetails(courseId);
-
-        // Populate TextViews with the fetched course details
+        // fill the text box
         if (course != null) {
             courseNameEditText.setText(course.getCourseName());
             courseCostEditText.setText(String.valueOf(course.getCourseCost()));
             courseDurationEditText.setText(course.getCourseDuration());
-            maxParticipantsEditText.setText(course.getMaxParticipants());
+            maxParticipantsEditText.setText(String.valueOf(course.getMaxParticipants()));
             startingDateEditText.setText(course.getStartingDate());
             registrationClosingDateEditText.setText(course.getRegistrationClosingDate());
             branchId = course.getBranchId();
-        }*/
+        }
 
-        //populateBranchSpinner();
+        // branch spinner
+        populateBranchSpinner();
+
+        // register button
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String updatedCourseName = courseNameEditText.getText().toString().trim();
+                double updatedCourseCost = Double.parseDouble(courseCostEditText.getText().toString().trim());
+                String updatedCourseDuration = courseDurationEditText.getText().toString().trim();
+                int updatedMaxParticipants = Integer.parseInt(maxParticipantsEditText.getText().toString().trim());
+                String updatedStartingDate = startingDateEditText.getText().toString().trim();
+                String updatedRegistrationClosingDate = registrationClosingDateEditText.getText().toString().trim();
+
+                // validate
+                if (TextUtils.isEmpty(updatedCourseName) || TextUtils.isEmpty(updatedCourseDuration) || TextUtils.isEmpty(updatedStartingDate) || TextUtils.isEmpty(updatedRegistrationClosingDate)) {
+                    Toast.makeText(UpdateCourseActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // create Course obj
+                Course updatedCourse = new Course();
+                updatedCourse.setCourseName(updatedCourseName);
+                updatedCourse.setCourseCost(updatedCourseCost);
+                updatedCourse.setCourseDuration(updatedCourseDuration);
+                updatedCourse.setMaxParticipants(updatedMaxParticipants);
+                updatedCourse.setStartingDate(updatedStartingDate);
+                updatedCourse.setRegistrationClosingDate(updatedRegistrationClosingDate);
+                updatedCourse.setBranchId(selectedBranchId);
+
+                /*boolean isUpdated = dbHandler.updateCourse(updatedCourse);
+
+                // Display toast message based on update result
+                if (isUpdated) {
+                    Toast.makeText(UpdateCourseActivity.this, "Course updated successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(UpdateCourseActivity.this, "Failed to update course", Toast.LENGTH_SHORT).show();
+                }*/
+            }
+        });
     }
 
     private void populateBranchSpinner() {
         // Get all branches from the database
-        List<Branch> branches = dbHandler.getAllBranches();
+        branches = dbHandler.getAllBranches();
 
         List<String> branchNames = new ArrayList<>();
         int selectedPosition = 0;
@@ -90,5 +132,21 @@ public class UpdateCourseActivity extends AppCompatActivity {
         branchSpinner.setAdapter(adapter);
 
         branchSpinner.setSelection(selectedPosition);
+
+        branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Branch selectedBranch = branches.get(position);
+
+                selectedBranchId = selectedBranch.getBranchId();
+            }
+
+            // optional one
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

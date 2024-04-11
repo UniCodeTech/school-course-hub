@@ -580,34 +580,27 @@ public class DBHandler extends SQLiteOpenHelper {
     public Course fetchCourseDetails(int courseId) {
         Course course = null;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
+        Cursor cursor = db.query(TABLE_COURSE,
+                new String[]{COLUMN_COURSE_ID, COLUMN_COURSE_NAME, COLUMN_COURSE_COST,
+                        COLUMN_COURSE_DURATION, COLUMN_COURSE_MAX_PARTICIPANTS, COLUMN_COURSE_STARTING_DATE,
+                        COLUMN_COURSE_REGISTRATION_CLOSING_DATE, COLUMN_COURSE_PUBLISH_DATE,
+                        COLUMN_CURRENT_ENROLLMENT, COLUMN_COURSE_BRANCH_ID},
+                COLUMN_COURSE_ID + "=?",
+                new String[]{String.valueOf(courseId)}, null, null, null, null);
 
-        try {
-            cursor = db.query(TABLE_COURSE,
-                    new String[]{COLUMN_COURSE_ID, COLUMN_COURSE_NAME, COLUMN_COURSE_COST,
-                            COLUMN_COURSE_DURATION, COLUMN_COURSE_MAX_PARTICIPANTS, COLUMN_COURSE_STARTING_DATE,
-                            COLUMN_COURSE_REGISTRATION_CLOSING_DATE, COLUMN_COURSE_PUBLISH_DATE,
-                            COLUMN_CURRENT_ENROLLMENT, COLUMN_COURSE_BRANCH_ID},
-                    COLUMN_COURSE_ID + "=?",
-                    new String[]{String.valueOf(courseId)}, null, null, null, null);
-
-            if (cursor != null && cursor.moveToFirst()) {
-                course = new Course(
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NAME)),
-                        cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COURSE_COST)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_DURATION)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_MAX_PARTICIPANTS)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_STARTING_DATE)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_REGISTRATION_CLOSING_DATE)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_PUBLISH_DATE)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_ENROLLMENT)),
-                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_BRANCH_ID))
-                );
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+        if (cursor != null && cursor.moveToFirst()) {
+            course = new Course(
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NAME)),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COURSE_COST)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_DURATION)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_MAX_PARTICIPANTS)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_STARTING_DATE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_REGISTRATION_CLOSING_DATE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_PUBLISH_DATE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_ENROLLMENT)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_BRANCH_ID))
+            );
+            cursor.close();
         }
         return course;
     }
