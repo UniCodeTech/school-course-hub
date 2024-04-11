@@ -17,6 +17,8 @@
     <string name="select_branch_location">Select Branch Location</string>
     <string name="update_course">Update Course</string>
 
+    <string name="course_overview">Course Overview</string>
+
     <string name="spinner_hint">Select gender</string>
     <string-array name="spinnerGender">
         <item>Male</item>
