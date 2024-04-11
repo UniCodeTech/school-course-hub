@@ -2,12 +2,14 @@ package com.example.schoolcoursehub.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,21 +20,26 @@ import com.example.schoolcoursehub.helper.Branch;
 import com.example.schoolcoursehub.helper.Course;
 import com.example.schoolcoursehub.helper.DBHandler;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class UpdateCourseActivity extends AppCompatActivity {
 
     private EditText courseNameEditText, courseCostEditText, courseDurationEditText,
             maxParticipantsEditText, startingDateEditText, registrationClosingDateEditText;
     private Button registerButton;
-    private TextView errorTextView;
+    private TextView textView;
     private Spinner branchSpinner;
     private DBHandler dbHandler;
 
     private int selectedBranchId;
     private int branchId;
     private List<Branch> branches;
+    private int courseId;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,7 @@ public class UpdateCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_course);
 
         //int courseId = 1;
-        int courseId = getIntent().getIntExtra("courseId", -1);
+        courseId = getIntent().getIntExtra("courseId", -1);
 
         dbHandler = new DBHandler(this);    // database
 
@@ -50,10 +57,11 @@ public class UpdateCourseActivity extends AppCompatActivity {
         maxParticipantsEditText = findViewById(R.id.updateMaxParticipantsEditText);
         startingDateEditText = findViewById(R.id.updateStartingDateEditText);
         registrationClosingDateEditText = findViewById(R.id.updateRegistrationClosingDateEditText);
+        calendar = Calendar.getInstance();
 
         registerButton = findViewById(R.id.updateButton);
 
-        errorTextView = findViewById(R.id.errorTextView);
+        textView = findViewById(R.id.textView);
 
         branchSpinner = findViewById(R.id.updateBranchSpinner);
 
@@ -93,6 +101,7 @@ public class UpdateCourseActivity extends AppCompatActivity {
 
                 // create Course obj
                 Course updatedCourse = new Course();
+                updatedCourse.setCourseId(courseId);
                 updatedCourse.setCourseName(updatedCourseName);
                 updatedCourse.setCourseCost(updatedCourseCost);
                 updatedCourse.setCourseDuration(updatedCourseDuration);
@@ -101,14 +110,29 @@ public class UpdateCourseActivity extends AppCompatActivity {
                 updatedCourse.setRegistrationClosingDate(updatedRegistrationClosingDate);
                 updatedCourse.setBranchId(selectedBranchId);
 
-                /*boolean isUpdated = dbHandler.updateCourse(updatedCourse);
 
-                // Display toast message based on update result
+                boolean isUpdated = dbHandler.updateCourse(updatedCourse);
+
+                // Display toast message
                 if (isUpdated) {
                     Toast.makeText(UpdateCourseActivity.this, "Course updated successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(UpdateCourseActivity.this, "Failed to update course", Toast.LENGTH_SHORT).show();
-                }*/
+                }
+            }
+        });
+
+        startingDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(startingDateEditText);
+            }
+        });
+
+        registrationClosingDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(registrationClosingDateEditText);
             }
         });
     }
@@ -148,5 +172,27 @@ public class UpdateCourseActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void showDatePickerDialog(final EditText editText) {
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateEditText(editText);
+            }
+        };
+
+        new DatePickerDialog(this, date, calendar
+                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void updateEditText(EditText editText) {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editText.setText(sdf.format(calendar.getTime()));
     }
 }

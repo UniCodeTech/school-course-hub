@@ -549,24 +549,22 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // Update course
-    public int updateCourse(long courseId, String courseName, float courseCost, String courseDuration,
-            int maxParticipants, String courseStartDate, String courseRegistrationCloseDate, String publishDate,
-            String courseBranchId) {
+    public boolean updateCourse(Course course) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_COURSE_NAME, courseName);
-        values.put(COLUMN_COURSE_COST, courseCost);
-        values.put(COLUMN_COURSE_DURATION, courseDuration);
-        values.put(COLUMN_COURSE_MAX_PARTICIPANTS, maxParticipants);
-        values.put(COLUMN_COURSE_STARTING_DATE, courseStartDate);
-        values.put(COLUMN_COURSE_REGISTRATION_CLOSING_DATE, courseRegistrationCloseDate);
-        values.put(COLUMN_COURSE_PUBLISH_DATE, publishDate);
-        values.put(COLUMN_COURSE_BRANCH_ID, courseBranchId);
+        values.put(COLUMN_COURSE_NAME, course.getCourseName());
+        values.put(COLUMN_COURSE_COST, course.getCourseCost());
+        values.put(COLUMN_COURSE_DURATION, course.getCourseDuration());
+        values.put(COLUMN_COURSE_MAX_PARTICIPANTS, course.getMaxParticipants());
+        values.put(COLUMN_COURSE_STARTING_DATE, course.getStartingDate());
+        values.put(COLUMN_COURSE_REGISTRATION_CLOSING_DATE, course.getRegistrationClosingDate());
+        values.put(COLUMN_COURSE_BRANCH_ID, course.getBranchId());
         int rowsAffected = db.update(TABLE_COURSE, values, COLUMN_COURSE_ID + " = ?",
-                new String[] { String.valueOf(courseId) });
+                new String[] { String.valueOf(course.getCourseId()) });
         db.close();
-        return rowsAffected;
+        return rowsAffected > 0;
     }
+
 
     // Delete course
     public int deleteCourse(long courseId) {
