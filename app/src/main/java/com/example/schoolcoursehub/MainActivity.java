@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.schoolcoursehub.admin.AdminHome;
 import com.example.schoolcoursehub.admin.UpdateCourseActivity;
+import com.example.schoolcoursehub.guest.ViewCourseActivity;
 import com.example.schoolcoursehub.helper.Course;
 import com.example.schoolcoursehub.helper.DBHandler;
 import com.example.schoolcoursehub.signupandlogin.LoginActivity;
@@ -67,7 +68,10 @@ public class MainActivity extends AppCompatActivity {
             courseCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "Course Name: "+course.getCourseName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, ViewCourseActivity.class);
+                    intent.putExtra("courseId", courseId);
+                    intent.putExtra("courseName", course.getCourseName());
+                    startActivity(intent);
                 }
             });
 
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLoginButtonClick(View view) {
-        
+
         System.out.println("Login Button Clicked");
 
         Intent intent = new Intent(this, LoginActivity.class);
