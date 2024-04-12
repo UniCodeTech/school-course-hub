@@ -228,8 +228,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_button"
                 android:textColor="@color/white"
-                android:text="@string/course_register"
-                android:onClick="onLoginButtonClick" />
+                android:text="@string/course_register" />
         </LinearLayout>
 
     </LinearLayout>

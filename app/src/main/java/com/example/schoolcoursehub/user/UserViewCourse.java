@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +35,14 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     private int courseId;
+    private int userId;
     private int branchId;
     private DBHandler dbHandler;
     private GoogleMap myMap;
     private TextView courseNameTextView, courseCostTextView, courseDurationTextView,
             currentEnrollmentTextView, startingDateTextView, registrationClosingDateTextView,
             publishDateTextView, branchTextView;
+    private Button registerNow;
 
     Branch branch;
 
@@ -50,6 +54,7 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
         courseId = getIntent().getIntExtra("courseId", -1);
         String courseName = getIntent().getStringExtra("courseName");
         branchId = getIntent().getIntExtra("branchId", -1);
+        userId = getIntent().getIntExtra("userId", -1);
         setTitle(courseName);
 
         dbHandler = new DBHandler(this);    // database
@@ -62,6 +67,8 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
         registrationClosingDateTextView = findViewById(R.id.registrationClosingDateTextView);
         publishDateTextView = findViewById(R.id.publishDateTextView);
         branchTextView = findViewById(R.id.branchTextView);
+
+        registerNow = findViewById(R.id.courseRegisterButton);
 
         if (checkLocationPermission()) {
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.branchMap);
@@ -96,6 +103,15 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
         } else {
             Toast.makeText(this, "Please try again later!", Toast.LENGTH_SHORT).show();
         }
+
+        registerNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserViewCourse.this, RegisterNow.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean checkLocationPermission() {
@@ -147,11 +163,4 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
             Toast.makeText(this, "Error: Google Map is null!", Toast.LENGTH_SHORT).show();
         }
     }
-
-    public void onLoginButtonClick(){
-        Intent intent = new Intent(UserViewCourse.this, ViewCourseActivity.class);
-        intent.putExtra("courseId", courseId);
-        startActivity(intent);
-    }
-
 }

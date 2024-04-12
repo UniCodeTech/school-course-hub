@@ -22,13 +22,14 @@ public class UserHome extends AppCompatActivity {
     private DBHandler db;
     String userName = "";
     private TextView welcomeUser;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
-        int userId = getIntent().getIntExtra("userId", -1);
+        userId = getIntent().getIntExtra("userId", -1);
         System.out.println("User Home Opened. UserID: "+userId); // check point
 
         db = new DBHandler(this);
@@ -72,6 +73,7 @@ public class UserHome extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(UserHome.this, UserViewCourse.class);
                         intent.putExtra("courseId", courseId);
+                        intent.putExtra("userId", userId);
                         intent.putExtra("courseName", course.getCourseName());
                         intent.putExtra("branchId", course.getBranchId());
                         startActivity(intent);

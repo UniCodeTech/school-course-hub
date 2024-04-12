@@ -20,6 +20,9 @@ import com.example.schoolcoursehub.helper.Course;
 import com.example.schoolcoursehub.helper.DBHandler;
 import com.example.schoolcoursehub.signupandlogin.LoginActivity;
 import com.example.schoolcoursehub.signupandlogin.RegistrationActivity;
+import com.example.schoolcoursehub.user.RegisterNow;
+import com.example.schoolcoursehub.user.UserHome;
+import com.example.schoolcoursehub.user.UserViewCourse;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d("Database", "Database does not exist");
         }
+
+        /*Intent intent = new Intent(MainActivity.this, RegisterNow.class);
+        intent.putExtra("userId", 2);
+        startActivity(intent);*/
+
 
         displayCourses();
     }
