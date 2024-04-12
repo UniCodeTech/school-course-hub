@@ -52,38 +52,44 @@ public class MainActivity extends AppCompatActivity {
     private void displayCourses() {
         List<Course> courses = db.getAllCourses();
 
-        LinearLayout courseListLayout = findViewById(R.id.courseListLayout);
-        courseListLayout.removeAllViews();
+        if(courses != null) {
+            LinearLayout courseListLayout = findViewById(R.id.courseListLayout);
+            courseListLayout.removeAllViews();
 
-        for (Course course : courses) {
-            View courseCardView = getLayoutInflater().inflate(R.layout.item_course, null);
+            for (Course course : courses) {
+                View courseCardView = getLayoutInflater().inflate(R.layout.item_course, null);
 
-            TextView courseNameTextView = courseCardView.findViewById(R.id.course_name);
-            TextView courseCostTextView = courseCardView.findViewById(R.id.course_cost);
-            TextView coursDurationTextView = courseCardView.findViewById(R.id.course_duration);
-            TextView maxParticipantTextView = courseCardView.findViewById(R.id.max_participant);
-            TextView startDateTextView = courseCardView.findViewById(R.id.start_date);
+                TextView courseNameTextView = courseCardView.findViewById(R.id.course_name);
+                TextView courseCostTextView = courseCardView.findViewById(R.id.course_cost);
+                TextView coursDurationTextView = courseCardView.findViewById(R.id.course_duration);
+                TextView maxParticipantTextView = courseCardView.findViewById(R.id.max_participant);
+                TextView startDateTextView = courseCardView.findViewById(R.id.start_date);
 
-            courseNameTextView.setText(course.getCourseName());
-            courseCostTextView.setText(String.valueOf(course.getCourseCost()));
-            coursDurationTextView.setText(String.valueOf(course.getCourseDuration()));
-            maxParticipantTextView.setText(String.valueOf(course.getMaxParticipants()));
-            startDateTextView.setText(String.valueOf(course.getStartingDate()));
+                courseNameTextView.setText(course.getCourseName());
+                courseCostTextView.setText(String.valueOf(course.getCourseCost()));
+                coursDurationTextView.setText(String.valueOf(course.getCourseDuration()));
+                maxParticipantTextView.setText(String.valueOf(course.getMaxParticipants()));
+                startDateTextView.setText(String.valueOf(course.getStartingDate()));
 
-            final int courseId = course.getCourseId();
-            courseCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, ViewCourseActivity.class);
-                    intent.putExtra("courseId", courseId);
-                    intent.putExtra("courseName", course.getCourseName());
-                    intent.putExtra("branchId", course.getBranchId());
-                    startActivity(intent);
-                }
-            });
+                final int courseId = course.getCourseId();
+                courseCardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, ViewCourseActivity.class);
+                        intent.putExtra("courseId", courseId);
+                        intent.putExtra("courseName", course.getCourseName());
+                        intent.putExtra("branchId", course.getBranchId());
+                        startActivity(intent);
+                    }
+                });
 
-            courseListLayout.addView(courseCardView);
+                courseListLayout.addView(courseCardView);
+            }
+        } else {
+            Toast.makeText(this, "Error retrieving courses!", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     public void onRegisterButtonClick(View view) {

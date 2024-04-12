@@ -4,7 +4,11 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -23,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private int courseId;
     private GoogleMap myMap;
     private TextView courseNameTextView, courseCostTextView, courseDurationTextView,
@@ -53,14 +58,19 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
         publishDateTextView = findViewById(R.id.publishDateTextView);
         branchTextView = findViewById(R.id.branchTextView);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.branchMap);
-
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
+        if (checkLocationPermission()) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.branchMap);
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(this);
+            } else {
+                Log.e(TAG, "Error: Map Fragment not found!");
+                throw new RuntimeException("Map Fragment Not Found!");
+            }
         } else {
-            Log.e(TAG, "Error: Map Fragment not found!");
-            throw new RuntimeException("Map Fragment Not Found!");
+            // Request location permission
+            requestLocationPermission();
         }
+
 
         // get all branch details
         // get course details
@@ -83,6 +93,19 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
+    private boolean checkLocationPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Toast.makeText(this, "Location permission is needed to display the branch location on the map.", Toast.LENGTH_LONG).show();
+            }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         myMap = googleMap;
@@ -96,18 +119,25 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
                 return;
             }
 
-            // Add a marker for the location
-            double latitude = branch.getLatitude();
-            double longitude = branch.getLongitude();
-            String locationName = branch.getBranchName();
+            try {
+                // Add a marker for the location
+                double latitude = branch.getLatitude();
+                double longitude = branch.getLongitude();
+                String locationName = branch.getBranchName();
 
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(new LatLng(latitude, longitude))
-                    .title(locationName);
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(new LatLng(latitude, longitude))
+                        .title(locationName);
 
-            myMap.addMarker(markerOptions);
+                myMap.addMarker(markerOptions);
 
-            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12));
+                myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12));
+
+            } catch (Exception e){
+                Toast.makeText(this, "Error initializing Google Maps", Toast.LENGTH_SHORT).show();
+            }
+
+
         } else {
             Toast.makeText(this, "Error: Google Map is null!", Toast.LENGTH_SHORT).show();
         }
