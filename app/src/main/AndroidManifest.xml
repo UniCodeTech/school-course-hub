@@ -7,9 +7,10 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -22,9 +23,13 @@
         android:theme="@style/Theme.SchoolCourseHub"
         tools:targetApi="31">
         <activity
-            android:name=".guest.ViewCourseActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".user.UserViewCourse"
+            android:parentActivityName=".user.UserHome"
             android:exported="false" />
+        <activity
+            android:name=".guest.ViewCourseActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".admin.UpdateCourseActivity"
             android:exported="false"

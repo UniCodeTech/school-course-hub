@@ -373,6 +373,33 @@ public class DBHandler extends SQLiteOpenHelper {
         return isLoggedIn;
     }
 
+    public String getUserNameById(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String userName = "";
+
+        String[] projection = {COLUMN_USER_NAME};
+        String selection = COLUMN_USERID + " = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+
+        Cursor cursor = db.query(
+                TABLE_USERS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            userName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME));
+            cursor.close();
+        }
+
+        return userName;
+    }
+
+
     public UserInfo getUserInfo(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         UserInfo userInfo = new UserInfo(); // Class to hold user ID and role

@@ -1,4 +1,4 @@
-package com.example.schoolcoursehub.guest;
+package com.example.schoolcoursehub.user;
 
 import static android.content.ContentValues.TAG;
 
@@ -25,25 +25,24 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.SupportMapFragment;
 
-public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+
     private int courseId;
+    private int branchId;
+    private DBHandler dbHandler;
     private GoogleMap myMap;
     private TextView courseNameTextView, courseCostTextView, courseDurationTextView,
             currentEnrollmentTextView, startingDateTextView, registrationClosingDateTextView,
             publishDateTextView, branchTextView;
-    private DBHandler dbHandler;
-    private int branchId;
-    private MapView mapView;
+
     Branch branch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_course);
+        setContentView(R.layout.activity_user_view_course);
 
         courseId = getIntent().getIntExtra("courseId", -1);
         String courseName = getIntent().getStringExtra("courseName");
@@ -51,10 +50,6 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
         setTitle(courseName);
 
         dbHandler = new DBHandler(this);    // database
-
-        /*mapView = findViewById(R.id.branchMap);
-        // Important: You must call onCreate() on the MapView after acquiring it
-        mapView.onCreate(savedInstanceState);*/
 
         courseNameTextView = findViewById(R.id.courseNameTextView);
         courseCostTextView = findViewById(R.id.courseCostTextView);
@@ -149,23 +144,6 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
             Toast.makeText(this, "Error: Google Map is null!", Toast.LENGTH_SHORT).show();
         }
     }
-/*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-*/
 }

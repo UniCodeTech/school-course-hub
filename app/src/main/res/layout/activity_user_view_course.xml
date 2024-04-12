@@ -207,13 +207,32 @@
             android:layout_marginRight="24dp">
 
             <fragment
-            android:id="@+id/branchMap"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+                android:id="@+id/branchMap"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </FrameLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp">
+            <Button
+                android:id="@+id/courseRegisterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_button"
+                android:textColor="@color/white"
+                android:text="@string/course_register"
+                android:onClick="onLoginButtonClick" />
+        </LinearLayout>
+
     </LinearLayout>
+
+
 </ScrollView>
