@@ -78,6 +78,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     String verifyCode = generateVerificationCode();
                     if(sendVerificationEmail(email, verifyCode)){ // send email
                         showVerificationDialog(verifyCode);
+                    } else {
+                        Toast.makeText(RegistrationActivity.this, "Please try again later!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -127,25 +129,25 @@ public class RegistrationActivity extends AppCompatActivity {
     // send an email
     private boolean sendVerificationEmail(String emailAddress, String verificationCode) {
         Email email = new Email();
-        String to = "officialyakaproduction@gmail.com";
-        String subject = "Check Email Sender";
-        String message = "This is a sample email from SchoolCourseHub";
 
         String sender = email.getEmail();
         String pass = email.getPassword();
 
         try {
+            String verificationEmailSubject = getString(R.string.verification_email_subject);
+            String verificationEmailBody = getString(R.string.verification_email_body, verificationCode);
+
             GMailSender gmailSender = new GMailSender(sender, pass);
             SendMailTask sendMailTask = new SendMailTask(gmailSender,
-                    "This is a Email from School Course Hub",
-                    "This is Body",
+                    verificationEmailSubject,
+                    verificationEmailBody,
                     pass,
-                    "officialyakaproduction@gmail.com") {
+                    emailAddress) {
                 @Override
                 protected void onPostExecute(Boolean result) {
                     if (result) {
                         // Email sent successfully
-                        Toast.makeText(RegistrationActivity.this, "Email sent successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistrationActivity.this, "Verification Email send. Check you email.", Toast.LENGTH_SHORT).show();
                     } else {
                         // Failed to send email
                         Toast.makeText(RegistrationActivity.this, "Failed to send email", Toast.LENGTH_SHORT).show();
@@ -274,7 +276,7 @@ public class RegistrationActivity extends AppCompatActivity {
             isValid = false;
         }
 
-        else if (idUniqueNIC(nic)){
+        else if (!idUniqueNIC(nic)){
             nicEditText.setError("NIC is already taken");
             errorTextView.setText("NIC is already taken");
             isValid = false;

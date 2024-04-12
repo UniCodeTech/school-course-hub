@@ -18,6 +18,10 @@
 
     <string name="course_overview">Course Overview</string>
 
+    <string name="verification_email_subject">Welcome to School Course Hub! Confirm Your Email Address</string>
+
+    <string name="verification_email_body">Hello,\n\nPlease verify your email address to start exploring our courses:\n\nVerification Code: %1$s\n\nBest regards,\nThe School Course Hub Team</string>
+
     <string name="spinner_hint">Select gender</string>
     <string-array name="spinnerGender">
         <item>Male</item>
