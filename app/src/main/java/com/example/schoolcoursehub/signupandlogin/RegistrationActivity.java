@@ -178,6 +178,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if (newRowId) {
             // Insertion successful
+            Toast.makeText(RegistrationActivity.this, "Registration successful!.", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
             finish();
         } else {

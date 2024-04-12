@@ -14,5 +14,5 @@
 .cxx
 local.properties
 .vscode/
-/app/src/main/java/com/example/schoolcoursehub/helper/EmailSender.java
 app/api_keys.properties
+/app/src/main/java/com/example/schoolcoursehub/emailsender

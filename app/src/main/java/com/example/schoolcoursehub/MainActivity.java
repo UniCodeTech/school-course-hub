@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         displayCourses();
+        //sendSampleEmail();
 
     }
 
@@ -95,4 +96,17 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
+    /*public void sendSampleEmail(){
+        String to = "officialyakaproduction@gmail.com";
+        String subject = "Check Email Sender";
+        String message = "This is a sample email from SchoolCourseHub";
+        EmailSender emailSender = new EmailSender();
+        boolean email = emailSender.sendEmail(to, subject, message);
+        if(email){
+            Toast.makeText(this, "Email Send!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Email not Send!", Toast.LENGTH_SHORT).show();
+        }
+    }*/
 }
