@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,7 +20,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.schoolcoursehub.MainActivity;
 import com.example.schoolcoursehub.R;
+import com.example.schoolcoursehub.emailsender.Email;
+import com.example.schoolcoursehub.emailsender.GMailSender;
+import com.example.schoolcoursehub.emailsender.SendMailTask;
 import com.example.schoolcoursehub.helper.DBHandler;
 
 import java.util.Calendar;
@@ -121,7 +126,37 @@ public class RegistrationActivity extends AppCompatActivity {
 
     // send an email
     private boolean sendVerificationEmail(String emailAddress, String verificationCode) {
-        // TODO
+        Email email = new Email();
+        String to = "officialyakaproduction@gmail.com";
+        String subject = "Check Email Sender";
+        String message = "This is a sample email from SchoolCourseHub";
+
+        String sender = email.getEmail();
+        String pass = email.getPassword();
+
+        try {
+            GMailSender gmailSender = new GMailSender(sender, pass);
+            SendMailTask sendMailTask = new SendMailTask(gmailSender,
+                    "This is a Email from School Course Hub",
+                    "This is Body",
+                    pass,
+                    "officialyakaproduction@gmail.com") {
+                @Override
+                protected void onPostExecute(Boolean result) {
+                    if (result) {
+                        // Email sent successfully
+                        Toast.makeText(RegistrationActivity.this, "Email sent successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Failed to send email
+                        Toast.makeText(RegistrationActivity.this, "Failed to send email", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+            sendMailTask.execute();
+        } catch (Exception e) {
+            Log.e("SendMail", e.getMessage(), e);
+
+        }
         return true;
     }
 

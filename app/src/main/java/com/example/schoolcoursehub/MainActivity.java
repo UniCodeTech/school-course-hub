@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.example.schoolcoursehub.admin.AdminHome;
 import com.example.schoolcoursehub.admin.UpdateCourseActivity;
+import com.example.schoolcoursehub.emailsender.Email;
+import com.example.schoolcoursehub.emailsender.GMailSender;
+import com.example.schoolcoursehub.emailsender.SendMailTask;
 import com.example.schoolcoursehub.guest.ViewCourseActivity;
 import com.example.schoolcoursehub.helper.Course;
 import com.example.schoolcoursehub.helper.DBHandler;
@@ -19,7 +22,11 @@ import com.example.schoolcoursehub.signupandlogin.LoginActivity;
 import com.example.schoolcoursehub.signupandlogin.RegistrationActivity;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         displayCourses();
-        //sendSampleEmail();
-
     }
 
     private void displayCourses() {
@@ -96,17 +101,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
-
-    /*public void sendSampleEmail(){
-        String to = "officialyakaproduction@gmail.com";
-        String subject = "Check Email Sender";
-        String message = "This is a sample email from SchoolCourseHub";
-        EmailSender emailSender = new EmailSender();
-        boolean email = emailSender.sendEmail(to, subject, message);
-        if(email){
-            Toast.makeText(this, "Email Send!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Email not Send!", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 }
