@@ -1,8 +1,14 @@
 package com.example.schoolcoursehub.admin;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -29,6 +35,7 @@ import org.w3c.dom.Text;
 
 public class AddNewBranch extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final String TAG = "AddNewBranch";
     private GoogleMap myMap;
     private Marker branchMarker;
@@ -49,16 +56,33 @@ public class AddNewBranch extends AppCompatActivity implements OnMapReadyCallbac
         locationTextView = findViewById(R.id.locationTextView);
         dbHandler = new DBHandler(this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
+        if (checkLocationPermission()) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(this);
+            } else {
+                Log.e(TAG, "Error: Map Fragment not found!");
+                throw new RuntimeException("Map Fragment Not Found!");
+            }
         } else {
-            Log.e(TAG, "Error: Map Fragment not found!");
-            throw new RuntimeException("Map Fragment Not Found!");
+            // Request location permission
+            requestLocationPermission();
         }
 
         addButton.setOnClickListener(view -> addBranch());
+    }
+
+    private boolean checkLocationPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Toast.makeText(this, "Location permission is needed to display the branch location on the map.", Toast.LENGTH_LONG).show();
+            }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        }
     }
 
     @Override
@@ -74,12 +98,16 @@ public class AddNewBranch extends AppCompatActivity implements OnMapReadyCallbac
                 return;
             }
 
-            myMap.setOnMapClickListener(latLng -> {
-                if (branchMarker != null) {
-                    branchMarker.remove();
-                }
-                branchMarker = myMap.addMarker(new MarkerOptions().position(latLng).title("Branch Location"));
-            });
+            try {
+                myMap.setOnMapClickListener(latLng -> {
+                    if (branchMarker != null) {
+                        branchMarker.remove();
+                    }
+                    branchMarker = myMap.addMarker(new MarkerOptions().position(latLng).title("Branch Location"));
+                });
+            } catch (Exception e){
+                Toast.makeText(this, "Error initializing Google Maps", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(this, "Error: Google Map is null!", Toast.LENGTH_SHORT).show();
         }
