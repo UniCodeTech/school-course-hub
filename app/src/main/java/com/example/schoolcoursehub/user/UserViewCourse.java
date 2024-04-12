@@ -8,13 +8,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.schoolcoursehub.MainActivity;
 import com.example.schoolcoursehub.R;
+import com.example.schoolcoursehub.guest.ViewCourseActivity;
 import com.example.schoolcoursehub.helper.Branch;
 import com.example.schoolcoursehub.helper.Course;
 import com.example.schoolcoursehub.helper.DBHandler;
@@ -145,5 +148,10 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
+    public void onLoginButtonClick(){
+        Intent intent = new Intent(UserViewCourse.this, ViewCourseActivity.class);
+        intent.putExtra("courseId", courseId);
+        startActivity(intent);
+    }
 
 }
