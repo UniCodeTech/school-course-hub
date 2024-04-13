@@ -108,4 +108,14 @@ public class Course {
     public void setBranchId(int branchId) {
         this.branchId = branchId;
     }
+
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }

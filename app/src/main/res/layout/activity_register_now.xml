@@ -10,14 +10,7 @@
         android:layout_marginRight="24dp"
         android:layout_marginBottom="12dp"
         android:gravity="center">
-
-        <!-- Course Selection -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clipToPadding="false" />
+        
 
         <!-- Total Fee -->
         <TextView

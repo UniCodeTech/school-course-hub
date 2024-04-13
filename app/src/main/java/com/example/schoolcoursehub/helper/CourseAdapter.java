@@ -62,11 +62,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             Course course = courses.get(getAdapterPosition());
             if (isChecked) {
                 totalFee += course.getCourseCost();
+                course.setSelected(true);
             } else {
                 totalFee -= course.getCourseCost();
+                course.setSelected(false);
             }
             listener.onCourseCheckedChanged(totalFee);
         }
+
     }
 
 
