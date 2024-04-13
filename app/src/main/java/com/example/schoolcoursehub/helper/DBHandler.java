@@ -183,6 +183,25 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public String getUserEmailAddress(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String emailAddress = "";
+
+        String selectQuery = "SELECT " + COLUMN_USER_EMAIL_ADDRESS + " FROM " + TABLE_USERS + " WHERE " + COLUMN_USERID + " = ?";
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            emailAddress = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_EMAIL_ADDRESS));
+        }
+
+        cursor.close();
+        db.close();
+
+        return emailAddress;
+    }
+
+
     public long insertCourseUser(int courseNo, int userId, String registrationDate, String promoCode, double discount, double totalFee) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -196,7 +215,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // Insert row
         long id = db.insert(TABLE_COURSE_USERS, null, values);
 
-        // If insertion is successful, increment CURRENT_ENROLLMENT for the course
+
         if (id != -1) {
             ContentValues incrementValue = new ContentValues();
             incrementValue.put(COLUMN_CURRENT_ENROLLMENT, "CURRENT_ENROLLMENT + 1");

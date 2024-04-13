@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.schoolcoursehub.R;
+import com.example.schoolcoursehub.emailsender.Email;
+import com.example.schoolcoursehub.emailsender.GMailSender;
+import com.example.schoolcoursehub.emailsender.SendMailTask;
 import com.example.schoolcoursehub.helper.Course;
 import com.example.schoolcoursehub.helper.CourseAdapter;
 import com.example.schoolcoursehub.helper.DBHandler;
@@ -35,6 +39,8 @@ public class RegisterNow extends AppCompatActivity {
     private EditText promoCodeEditText;
 
     private double courseFee, discountAmt, discountedTotalFee, discount = 0.0;
+    double totalFeeAfterDiscount = 0.0;
+    private String courseName;
 
 
     @Override
@@ -84,6 +90,7 @@ public class RegisterNow extends AppCompatActivity {
                 Toast.makeText(this, "Course reached maximum participants limit.", Toast.LENGTH_SHORT).show();
             } else {
                 displayCourseDetails();
+                courseName = course.getCourseName();
             }
         }
 
@@ -157,7 +164,7 @@ public class RegisterNow extends AppCompatActivity {
         double discount = 0.0;
         discount = this.discount;
 
-        double totalFeeAfterDiscount = courseFee - discountAmt;
+        totalFeeAfterDiscount = courseFee - discountAmt;
 
         long result;
         if (promoCode != null && !promoCode.isEmpty()) {
@@ -167,7 +174,10 @@ public class RegisterNow extends AppCompatActivity {
         }
 
         if (result != -1) {
-            Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
+            if(sendConfirmEmail()){
+                Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
+            }
+
         } else {
             Toast.makeText(this, "Payment failed. Please try again later!", Toast.LENGTH_SHORT).show();
         }
@@ -196,5 +206,49 @@ public class RegisterNow extends AppCompatActivity {
     private boolean isMaxParticipantsReached(int currentEnrollment, int maxParticipants) {
         return currentEnrollment >= maxParticipants;
     }
+
+    public boolean sendConfirmEmail() {
+        String emailAddress = db.getUserEmailAddress(userId);
+
+        if (emailAddress == null || emailAddress.isEmpty()) {
+            Log.e("SendConfirmEmail", "User email address is null or empty.");
+            return false;
+        }
+
+        Email email = new Email();
+        String sender = email.getEmail();
+        String pass = email.getPassword();
+
+        try {
+            String confirmationEmailSubject = "Payment Confirmation for " + courseName;
+            String confirmationEmailBody = "Dear User,\n\nThank you for your payment. You have successfully registered for the course \"" + courseName + "\". " +
+                    "The total fee is Rs." + totalFeeAfterDiscount + ". Please keep this email as a payment receipt.\n\nBest regards,\nThe School Course Hub Team";
+
+            GMailSender gmailSender = new GMailSender(sender, pass);
+            SendMailTask sendMailTask = new SendMailTask(gmailSender,
+                    confirmationEmailSubject,
+                    confirmationEmailBody,
+                    pass,
+                    emailAddress) {
+                @Override
+                protected void onPostExecute(Boolean result) {
+                    if (result) {
+                        // Email sent successfully
+                        Log.d("SendConfirmEmail", "Confirmation email sent successfully.");
+                    } else {
+                        // Failed to send email
+                        Log.e("SendConfirmEmail", "Failed to send confirmation email.");
+                    }
+                }
+            };
+            sendMailTask.execute();
+            return true;
+        } catch (Exception e) {
+            Log.e("SendConfirmEmail", e.getMessage(), e);
+            return false;
+        }
+    }
+
+
 
 }
