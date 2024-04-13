@@ -25,7 +25,7 @@
                 android:id="@+id/courseTitleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Course Title"
+                android:text="@string/course_title"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                android:text="Course Description"
+                android:text="@string/course_desc"
                 android:textSize="16sp" />
 
             <!-- Other course details like instructor, duration, etc. -->
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:textStyle="bold"
-            android:text="Total Fee: Rs.0.00"
+            android:text="@string/course_tot_fee"
             android:textSize="18sp" />
 
         <!-- Promo Code Entry -->
@@ -63,7 +63,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/custom_edit_text_background"
-            android:hint="Enter Promo Code"
+            android:hint="@string/enter_promo_code"
             android:inputType="text"
             android:padding="12dp" />
 
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:background="@drawable/custom_button"
-            android:text="Apply Promo Code"
+            android:text="@string/apply_promo_code"
             android:textColor="@color/white" />
 
         <!-- Discounted Total Fee -->
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="You got 0% discount"
+            android:text="@string/you_got"
             android:textSize="18sp" />
 
         <TextView
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textStyle="bold"
-            android:text="Discounted Total Fee: Rs.0.00"
+            android:text="@string/dis_tot_fee"
             android:textSize="18sp" />
 
         <!-- Pay Button -->
@@ -103,7 +103,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/custom_button"
-            android:text="Pay Now"
+            android:text="@string/pay_now"
             android:textColor="@color/white" />
 
     </LinearLayout>

@@ -1,19 +1,50 @@
 <resources>
-    <string name="app_name">School Course Hub</string>
-    <string name="login_btn">Log in</string>
-    <string name="register_btn">Register</string>
-    <string name="login_title">Log in</string>
-    <string name="register_title">Register</string>
+    <!-- activity_add_new_branch.xml -->
+    <string name="branch_name">Branch Name</string>
+    <string name="select_branch_location">Select Branch Location</string>
+    <string name="add_new_branch">Add New Branch</string>
+
+    <!-- activity_add_new_course.xml -->
+    <string name="course_name">Course Name</string>
+    <string name="cost">Cost</string>
+    <string name="duration">Duration</string>
+    <string name="max_parti">Max Participants</string>
+    <string name="starting_date">Starting Date</string>
+    <string name="reg_closing_date">Registration Closing Date</string>
+    <string name="add_new_course">Add New Course</string>
+
+    <!-- activity_login.xml -->
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="login_title">Log in</string>
+    <string name="register_text">Don\'t have an account? Register here.</string>
+
+    <!-- activity_main.xml -->
+    <string name="register_btn">Register</string>
+
+    <!-- activity_register_now.xml -->
+    <string name="course_title">Course Title</string>
+    <string name="course_desc">Course Description</string>
+    <string name="course_tot_fee">Total Fee: Rs.0.00</string>
+    <string name="enter_promo_code">Enter Promo Code</string>
+    <string name="apply_promo_code">Apply Promo Code</string>
+    <string name="you_got">You got 0% discount</string>
+    <string name="dis_tot_fee">Discounted Total Fee: Rs.0.00</string>
+    <string name="pay_now">Pay Now</string>
+
+    <string name="app_name">School Course Hub</string>
+    <string name="login_btn">Log in</string>
+
+
+    <string name="register_title">Register</string>
+
 
     <string name="admin_login_title">Admin Log In</string>
-    <string name="register_text">Don\'t have an account? Register here.</string>
     <string name="admin_home">Admin Dashboard</string>
-    <string name="add_new_course">Add New Course</string>
+
     <string name="view_user_list">User List</string>
-    <string name="add_new_branch">Add New Branch</string>
-    <string name="select_branch_location">Select Branch Location</string>
+
+
     <string name="update_course">Update Course</string>
 
     <string name="course_overview">Course Overview</string>
