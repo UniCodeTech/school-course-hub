@@ -57,6 +57,7 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
         userId = getIntent().getIntExtra("userId", -1);
         setTitle(courseName);
 
+
         dbHandler = new DBHandler(this);    // database
 
         courseNameTextView = findViewById(R.id.courseNameTextView);
@@ -109,7 +110,7 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
             public void onClick(View v) {
                 Intent intent = new Intent(UserViewCourse.this, RegisterNow.class);
                 intent.putExtra("userId", userId);
-                intent.putExtra("courseId", course.getCourseId());
+                intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }
         });

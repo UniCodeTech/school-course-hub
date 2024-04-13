@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +42,7 @@ public class RegisterNow extends AppCompatActivity {
     private double courseFee, discountAmt, discountedTotalFee, discount = 0.0;
     double totalFeeAfterDiscount = 0.0;
     private String courseName;
+    private Button applyPromoCodeButton, payButton;
 
 
     @Override
@@ -53,17 +55,37 @@ public class RegisterNow extends AppCompatActivity {
         db = new DBHandler(this);
 
         totalFeeTextView = findViewById(R.id.totalFeeTextView);
-        discountedTotalFeeTextView = findViewById(R.id.totalFeeTextView);
+        discountedTotalFeeTextView = findViewById(R.id.discountedTotalFeeTextView);
         courseTitleTextView = findViewById(R.id.courseTitleTextView);
         courseDescriptionTextView = findViewById(R.id.courseDescriptionTextView);
         discountTextView = findViewById(R.id.discountTextView);
         promoCodeEditText = findViewById(R.id.promoCodeEditText);
 
 
-        Button applyPromoCodeButton = findViewById(R.id.applyPromoCodeButton);
-        Button payButton = findViewById(R.id.payButton);
+        applyPromoCodeButton = findViewById(R.id.applyPromoCodeButton);
+        payButton = findViewById(R.id.payButton);
 
+        Toast.makeText(this, "CourseID: "+courseId, Toast.LENGTH_SHORT).show();
+        displayCourseDetails();
+
+        applyPromoCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                applyPromoCode();
+            }
+        });
+
+        payButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                payNow();
+            }
+        });
+    }
+
+    public void displayCourseDetails() {
         Course course = db.fetchCourseDetails(courseId);
+
         if (course != null) {
             if (isRegistrationClosed(course.getRegistrationClosingDate())) {
                 // Disable buttons
@@ -89,45 +111,24 @@ public class RegisterNow extends AppCompatActivity {
 
                 Toast.makeText(this, "Course reached maximum participants limit.", Toast.LENGTH_SHORT).show();
             } else {
-                displayCourseDetails();
+                String courseDesc = "This course, titled " + course.getCourseName() + ", spans " + course.getCourseDuration() + "." +
+                        "It costs " + course.getCourseCost() + " and accepts up to " + course.getMaxParticipants() + " participants. " +
+                        "Starting on " + course.getStartingDate() + ", registration closes on " +
+                        "" + course.getRegistrationClosingDate() + ". Published on " + course.getPublishDate() + ". " +
+                        "Currently, " + course.getCurrentEnrollment() + " participants are enrolled";
+
                 courseName = course.getCourseName();
+
+                courseFee = course.getCourseCost();
+                discountedTotalFee = courseFee - discountAmt;
+
+                courseTitleTextView.setText(course.getCourseName());
+                courseDescriptionTextView.setText(courseDesc);
+                totalFeeTextView.setText("Course Fee: Rs." + String.valueOf(courseFee));
+                discountTextView.setText("");
+                discountedTotalFeeTextView.setText("Discounted Total Fee: Rs." + String.valueOf(discountedTotalFee));
+
             }
-        }
-
-        applyPromoCodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                applyPromoCode();
-            }
-        });
-
-        payButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                payNow();
-            }
-        });
-    }
-
-    public void displayCourseDetails() {
-        Course course = db.fetchCourseDetails(courseId);
-
-        if (course != null) {
-            String courseDesc = "This course, titled " + course.getCourseName() + ", spans " + course.getCourseDuration() + "." +
-                    "It costs " + course.getCourseCost() + " and accepts up to " + course.getMaxParticipants() + " participants. " +
-                    "Starting on " + course.getStartingDate() + ", registration closes on " +
-                    "" + course.getRegistrationClosingDate() + ". Published on " + course.getPublishDate() + ". " +
-                    "Currently, " + course.getCurrentEnrollment() + " participants are enrolled";
-
-            courseFee = course.getCourseCost();
-            discountedTotalFee = courseFee - discountAmt;
-
-            courseTitleTextView.setText(course.getCourseName());
-            courseDescriptionTextView.setText(courseDesc);
-            totalFeeTextView.setText("Course Fee: Rs." + String.valueOf(courseFee));
-            discountTextView.setText("");
-            discountedTotalFeeTextView.setText("Discounted Total Fee: Rs." + String.valueOf(discountedTotalFee));
-
         } else {
             Toast.makeText(this, "Please try again later!", Toast.LENGTH_SHORT).show();
         }
@@ -166,15 +167,22 @@ public class RegisterNow extends AppCompatActivity {
         totalFeeAfterDiscount = courseFee - discountAmt;
 
         long result;
+        boolean increment;
         if (promoCode != null && !promoCode.isEmpty()) {
             result = db.insertCourseUser(courseId, userId, registrationDate, promoCode, discount, totalFeeAfterDiscount);
+            increment = db.incrementCurrentEnrollment(courseId);
         } else {
             result = db.insertCourseUser(courseId, userId, registrationDate, null, discount, totalFeeAfterDiscount);
+            increment = db.incrementCurrentEnrollment(courseId);
         }
 
-        if (result != -1) {
+        if (result != -1 && increment) {
             if (sendConfirmEmail()) {
                 Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(RegisterNow.this, UserHome.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                finish();
             }
 
         } else {

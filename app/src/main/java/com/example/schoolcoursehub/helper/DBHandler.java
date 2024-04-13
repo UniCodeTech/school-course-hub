@@ -183,6 +183,44 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public boolean incrementCurrentEnrollment(int courseId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String selection = COLUMN_COURSE_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(courseId)};
+
+        // Retrieve the current enrollment count from the database
+        int currentEnrollment = 0;
+        Cursor cursor = db.query(
+                TABLE_COURSE,
+                new String[]{COLUMN_CURRENT_ENROLLMENT},
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        if (cursor != null && cursor.moveToFirst()) {
+            currentEnrollment = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_ENROLLMENT));
+            cursor.close();
+        }
+
+        currentEnrollment++;
+
+        values.put(COLUMN_CURRENT_ENROLLMENT, currentEnrollment);
+
+        // Update the database
+        int rowsAffected = db.update(TABLE_COURSE, values, selection, selectionArgs);
+        if (rowsAffected > 0) {
+            Log.d("DBHandler", "Current enrollment incremented for courseId: " + courseId);
+            return true; // Return true indicating success
+        } else {
+            Log.e("DBHandler", "Failed to increment current enrollment for courseId: " + courseId);
+            return false; // Return false indicating failure
+        }
+    }
+
+
     public String getUserEmailAddress(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String emailAddress = "";
@@ -214,13 +252,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // Insert row
         long id = db.insert(TABLE_COURSE_USERS, null, values);
-
-
-        if (id != -1) {
-            ContentValues incrementValue = new ContentValues();
-            incrementValue.put(COLUMN_CURRENT_ENROLLMENT, "CURRENT_ENROLLMENT + 1");
-            db.update(TABLE_COURSE, incrementValue, COLUMN_COURSE_ID + " = ?", new String[]{String.valueOf(courseNo)});
-        }
 
         db.close();
         return id;
