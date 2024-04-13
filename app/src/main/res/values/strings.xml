@@ -32,31 +32,54 @@
     <string name="dis_tot_fee">Discounted Total Fee: Rs.0.00</string>
     <string name="pay_now">Pay Now</string>
 
-    <string name="app_name">School Course Hub</string>
-    <string name="login_btn">Log in</string>
+    <!-- activity_registration.xml -->
+    <string name="upload_pro_pic">Upload Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="dob">Date of Birth</string>
+    <string name="nic">NIC</string>
+    <string name="spinner_hint">Select gender</string>
+    <string name="tp">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="con_password">Confirm Password</string>
 
-
-    <string name="register_title">Register</string>
-
-
-    <string name="admin_login_title">Admin Log In</string>
-    <string name="admin_home">Admin Dashboard</string>
-
-    <string name="view_user_list">User List</string>
-
-
+    <!-- activity_update_course.xml -->
     <string name="update_course">Update Course</string>
 
+    <!-- activity_user_home.xml -->
+    <string name="welcome">Welcome</string>
+
+    <!-- activity_user_view_course.xml -->
     <string name="course_overview">Course Overview</string>
+    <string name="c_name">Course Name: </string>
+    <string name="c_cost">Course Cost: </string>
+    <string name="c_duration">Course Duration: </string>
+    <string name="current_enrol">Current Enrollment: </string>
+    <string name="c_starting_date">Starting Date: </string>
+    <string name="c_reg_closing">Registration Closing Date: </string>
+    <string name="c_pub_date">Publish Date: </string>
+    <string name="c_branch">Branch: </string>
+    <string name="c_branch_location">Branch Location</string>
+    <string name="course_register">Register Now</string>
 
+    <!-- AndroidManifest.xml -->
+    <string name="app_name">School Course Hub</string>
+    <string name="login_btn">Log in</string>
+    <string name="register_title">Register</string>
+    <string name="admin_login_title">Admin Log In</string>
+    <string name="admin_home">Admin Dashboard</string>
+    <string name="view_user_list">User List</string>
+    
+    <!-- for Email -->
     <string name="verification_email_subject">Welcome to School Course Hub! Confirm Your Email Address</string>
-
     <string name="verification_email_body">Hello,\n\nPlease verify your email address to start exploring our courses:\n\nVerification Code: %1$s\n\nBest regards,\nThe School Course Hub Team</string>
 
-    <string name="course_register">Register Now</string>
-    <string name="spinner_hint">Select gender</string>
+    <!-- Gender Spinner -->
     <string-array name="spinnerGender">
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
 </resources>

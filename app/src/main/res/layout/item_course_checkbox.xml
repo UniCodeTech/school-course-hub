@@ -27,7 +27,7 @@
             android:gravity="start|center_vertical"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="Course Name" />
+            android:text="@string/course_name" />
 
         <TextView
             android:id="@+id/courseFeeTextViewCheckBox"
@@ -41,7 +41,7 @@
             android:gravity="start|center_vertical"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="Course Fee" />
+            android:text="@string/cost" />
 
     </LinearLayout>
 
