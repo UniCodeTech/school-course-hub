@@ -71,7 +71,7 @@
     <string name="admin_login_title">Admin Log In</string>
     <string name="admin_home">Admin Dashboard</string>
     <string name="view_user_list">User List</string>
-    
+
     <!-- for Email -->
     <string name="verification_email_subject">Welcome to School Course Hub! Confirm Your Email Address</string>
     <string name="verification_email_body">Hello,\n\nPlease verify your email address to start exploring our courses:\n\nVerification Code: %1$s\n\nBest regards,\nThe School Course Hub Team</string>

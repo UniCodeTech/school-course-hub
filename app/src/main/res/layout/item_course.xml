@@ -48,7 +48,7 @@
                     android:id="@+id/course_cost_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course Fee: "
+                    android:text="@string/c_cost"
                     android:textStyle="bold" />
 
                 <TextView
@@ -66,7 +66,7 @@
                     android:id="@+id/course_duration_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Duration: "
+                    android:text="@string/c_duration"
                     android:textStyle="bold" />
 
                 <TextView
@@ -84,7 +84,7 @@
                     android:id="@+id/max_participant_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Max Participant: "
+                    android:text="@string/max_parti"
                     android:textStyle="bold" />
 
                 <TextView
@@ -102,7 +102,7 @@
                     android:id="@+id/start_date_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start Date: "
+                    android:text="@string/c_starting_date"
                     android:textStyle="bold" />
 
                 <TextView
