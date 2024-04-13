@@ -109,24 +109,24 @@ public class RegisterNow extends AppCompatActivity {
         });
     }
 
-    public void displayCourseDetails(){
+    public void displayCourseDetails() {
         Course course = db.fetchCourseDetails(courseId);
 
-        if(course != null){
-            String courseDesc = "This course, titled "+course.getCourseName()+", spans "+course.getCourseDuration()+"." +
-                    "It costs "+course.getCourseCost()+" and accepts up to "+course.getMaxParticipants()+" participants. " +
-                    "Starting on "+course.getStartingDate()+", registration closes on " +
-                    ""+course.getRegistrationClosingDate()+". Published on "+course.getPublishDate()+". " +
-                    "Currently, "+course.getCurrentEnrollment()+" participants are enrolled";
+        if (course != null) {
+            String courseDesc = "This course, titled " + course.getCourseName() + ", spans " + course.getCourseDuration() + "." +
+                    "It costs " + course.getCourseCost() + " and accepts up to " + course.getMaxParticipants() + " participants. " +
+                    "Starting on " + course.getStartingDate() + ", registration closes on " +
+                    "" + course.getRegistrationClosingDate() + ". Published on " + course.getPublishDate() + ". " +
+                    "Currently, " + course.getCurrentEnrollment() + " participants are enrolled";
 
             courseFee = course.getCourseCost();
             discountedTotalFee = courseFee - discountAmt;
 
             courseTitleTextView.setText(course.getCourseName());
             courseDescriptionTextView.setText(courseDesc);
-            totalFeeTextView.setText("Course Fee: Rs."+String.valueOf(courseFee));
+            totalFeeTextView.setText("Course Fee: Rs." + String.valueOf(courseFee));
             discountTextView.setText("");
-            discountedTotalFeeTextView.setText("Discounted Total Fee: Rs."+String.valueOf(discountedTotalFee));
+            discountedTotalFeeTextView.setText("Discounted Total Fee: Rs." + String.valueOf(discountedTotalFee));
 
         } else {
             Toast.makeText(this, "Please try again later!", Toast.LENGTH_SHORT).show();
@@ -156,8 +156,7 @@ public class RegisterNow extends AppCompatActivity {
     }
 
 
-
-    private void payNow(){
+    private void payNow() {
         String registrationDate = getCurrentDateTime();
 
         String promoCode = promoCodeEditText.getText().toString();
@@ -174,7 +173,7 @@ public class RegisterNow extends AppCompatActivity {
         }
 
         if (result != -1) {
-            if(sendConfirmEmail()){
+            if (sendConfirmEmail()) {
                 Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show();
             }
 
@@ -248,7 +247,4 @@ public class RegisterNow extends AppCompatActivity {
             return false;
         }
     }
-
-
-
 }
