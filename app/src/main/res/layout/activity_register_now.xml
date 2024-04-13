@@ -10,7 +10,38 @@
         android:layout_marginRight="24dp"
         android:layout_marginBottom="12dp"
         android:gravity="center">
-        
+
+        <!-- Course CardView -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:padding="16dp"
+            android:background="@color/white">
+
+            <!-- Course Title -->
+            <TextView
+                android:id="@+id/courseTitleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Course Title"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Course Description -->
+            <TextView
+                android:id="@+id/courseDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Course Description"
+                android:textSize="16sp" />
+
+            <!-- Other course details like instructor, duration, etc. -->
+
+        </androidx.cardview.widget.CardView>
+
 
         <!-- Total Fee -->
         <TextView
@@ -48,10 +79,18 @@
 
         <!-- Discounted Total Fee -->
         <TextView
-            android:id="@+id/discountedTotalFeeTextView"
+            android:id="@+id/discountTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:text="You got 0% discount"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/discountedTotalFeeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:textStyle="bold"
             android:text="Discounted Total Fee: Rs.0.00"
             android:textSize="18sp" />

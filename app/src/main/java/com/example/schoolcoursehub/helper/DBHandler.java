@@ -183,6 +183,32 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public long insertCourseUser(int courseNo, int userId, String registrationDate, String promoCode, double discount, double totalFee) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_COURSE_NO, courseNo);
+        values.put(COLUMN_USER_ID, userId);
+        values.put(COLUMN_USER_REGISTRATION_DATE, registrationDate);
+        values.put(COLUMN_PROMOTION_CODE, promoCode);
+        values.put(COLUMN_DISCOUNT, discount);
+        values.put(COLUMN_TOTAL_FEE, totalFee);
+
+        // Insert row
+        long id = db.insert(TABLE_COURSE_USERS, null, values);
+
+        // If insertion is successful, increment CURRENT_ENROLLMENT for the course
+        if (id != -1) {
+            ContentValues incrementValue = new ContentValues();
+            incrementValue.put(COLUMN_CURRENT_ENROLLMENT, "CURRENT_ENROLLMENT + 1");
+            db.update(TABLE_COURSE, incrementValue, COLUMN_COURSE_ID + " = ?", new String[]{String.valueOf(courseNo)});
+        }
+
+        db.close();
+        return id;
+    }
+
+
+
     public double getDiscountPercentageForPromoCode(String promoCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         double discountPercentage = 0.0;

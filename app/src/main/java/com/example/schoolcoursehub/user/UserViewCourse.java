@@ -109,6 +109,7 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
             public void onClick(View v) {
                 Intent intent = new Intent(UserViewCourse.this, RegisterNow.class);
                 intent.putExtra("userId", userId);
+                intent.putExtra("courseId", course.getCourseId());
                 startActivity(intent);
             }
         });
