@@ -11,18 +11,38 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical" />
 
-    <TextView
-        android:id="@+id/courseNameTextViewCheckBox"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="16dp"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:gravity="start|center_vertical"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:text="Course Name" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/courseNameTextViewCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:gravity="start|center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Course Name" />
+
+        <TextView
+            android:id="@+id/courseFeeTextViewCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:gravity="start|center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Course Fee" />
+
+    </LinearLayout>
 
 </LinearLayout>

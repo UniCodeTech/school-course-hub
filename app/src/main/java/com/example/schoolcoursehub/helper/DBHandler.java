@@ -183,6 +183,25 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+    public double getDiscountPercentageForPromoCode(String promoCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        double discountPercentage = 0.0;
+
+        String[] columns = {PROMOTION_DISCOUNT};
+        String selection = PROMOTION_CODE + " = ?";
+        String[] selectionArgs = {promoCode};
+
+        Cursor cursor = db.query(TABLE_PROMOTION, columns, selection, selectionArgs, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            discountPercentage = cursor.getDouble(cursor.getColumnIndexOrThrow(PROMOTION_DISCOUNT));
+            cursor.close();
+        }
+        db.close();
+        return discountPercentage;
+    }
+
+
     public void updateCourseTable(SQLiteDatabase db) {
         System.out.println("** ** ** updateCourseTable **");
         String CREATE_COURSE_TABLE_NEW = "CREATE TABLE " + TABLE_COURSE + "("
