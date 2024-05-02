@@ -92,6 +92,8 @@ public class AdminHome extends AppCompatActivity {
             viewUserList();
         } else if (item.getItemId()==R.id.add_branch) {
             addBranch();
+        } else if (item.getItemId()==R.id.view_enrolled_student) {
+            viewEnrolledStudent();
         }
         return true;
     }
@@ -112,6 +114,11 @@ public class AdminHome extends AppCompatActivity {
     private void addBranch() {
         System.out.println("Add Branch Clicked");
         Intent intent = new Intent(AdminHome.this, AddNewBranch.class);
+        startActivity(intent);
+    }
+
+    private void viewEnrolledStudent(){
+        Intent intent = new Intent(AdminHome.this, ViewEnrolledStudent.class);
         startActivity(intent);
     }
 }

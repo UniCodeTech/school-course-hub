@@ -23,10 +23,15 @@
         android:theme="@style/Theme.SchoolCourseHub"
         tools:targetApi="31">
         <activity
+            android:name=".admin.ViewEnrolledStudent"
+            android:exported="false"
+            android:label="@string/view_enrolled_student"
+            android:parentActivityName=".admin.AdminHome"/>
+        <activity
             android:name=".user.RegisterNow"
+            android:exported="false"
             android:label="@string/course_register"
-            android:parentActivityName=".user.UserViewCourse"
-            android:exported="false" />
+            android:parentActivityName=".user.UserViewCourse" />
         <activity
             android:name=".user.UserViewCourse"
             android:exported="false"

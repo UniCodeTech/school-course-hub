@@ -10,5 +10,8 @@
     <item
         android:id="@+id/add_branch"
         android:title="Add Branch"/>
+    <item
+        android:id="@+id/view_enrolled_student"
+        android:title="View Enrolled Student"/>
 
 </menu>

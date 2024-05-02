@@ -750,5 +750,53 @@ public class DBHandler extends SQLiteOpenHelper {
         return course;
     }
 
+    public List<CourseUserDetails> getAllCourseUsersWithDetails() {
+        List<CourseUserDetails> courseUserDetailsList = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Select Query joining COURSE_USERS with COURSE, USERS, and BRANCH tables
+        String selectQuery = "SELECT cu.*, c." + COLUMN_COURSE_NAME + ", u." + COLUMN_USER_NAME + ", c." + COLUMN_COURSE_BRANCH_ID + ", c." + COLUMN_COURSE_REGISTRATION_CLOSING_DATE + ", c." + COLUMN_COURSE_STARTING_DATE + ", c." + COLUMN_COURSE_COST + ", b." + COLUMN_BRANCH_NAME +
+                " FROM " + TABLE_COURSE_USERS + " cu" +
+                " INNER JOIN " + TABLE_COURSE + " c ON cu." + COLUMN_COURSE_NO + " = c." + COLUMN_COURSE_ID +
+                " INNER JOIN " + TABLE_USERS + " u ON cu." + COLUMN_USER_ID + " = u." + COLUMN_USERID +
+                " INNER JOIN " + TABLE_BRANCH + " b ON c." + COLUMN_COURSE_BRANCH_ID + " = b." + COLUMN_BRANCH_ID;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Loop through the cursor and populate CourseUserDetails objects with details from joined tables
+        if (cursor.moveToFirst()) {
+            do {
+                CourseUserDetails userDetails = new CourseUserDetails();
+                // Set details from COURSE_USERS table
+                userDetails.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_USER_ID)));
+                userDetails.setCourseNo(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NO)));
+                userDetails.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
+                userDetails.setRegistrationDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_REGISTRATION_DATE)));
+                userDetails.setTotalFee(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_TOTAL_FEE)));
+
+                // Set details from joined COURSE table
+                userDetails.setCourseName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NAME)));
+                userDetails.setBranchId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_BRANCH_ID)));
+                userDetails.setRegistrationClosingDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_REGISTRATION_CLOSING_DATE)));
+                userDetails.setStartingDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_STARTING_DATE)));
+                userDetails.setCourseCost(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COURSE_COST)));
+
+                // Set details from joined BRANCH table
+                userDetails.setBranchName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_NAME)));
+
+                // Set details from joined USERS table
+                userDetails.setUserName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)));
+
+                // Add the CourseUserDetails object to the list
+                courseUserDetailsList.add(userDetails);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return courseUserDetailsList;
+    }
+
+
+
 }
 

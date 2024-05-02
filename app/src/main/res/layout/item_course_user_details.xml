@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/text_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course Name:" />
+
+    <TextView
+        android:id="@+id/text_branch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Branch:" />
+
+    <TextView
+        android:id="@+id/text_registration_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Registration Date:" />
+
+    <TextView
+        android:id="@+id/text_total_fee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Fee:" />
+
+</LinearLayout>

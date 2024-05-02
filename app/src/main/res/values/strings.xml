@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="view_enrolled_student">Course Enrolled Students</string>
+
     <!-- activity_add_new_branch.xml -->
     <string name="branch_name">Branch Name</string>
     <string name="select_branch_location">Select Branch Location</string>
