@@ -796,6 +796,39 @@ public class DBHandler extends SQLiteOpenHelper {
         return courseUserDetailsList;
     }
 
+    public List<Course> getCoursesForUser(int userId) {
+        List<Course> coursesList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Select Query joining COURSE_USERS with COURSE, BRANCH, and COURSE_USERS tables
+        String selectQuery = "SELECT c.*, b." + COLUMN_BRANCH_NAME + ", cu." + COLUMN_USER_REGISTRATION_DATE +
+                " FROM " + TABLE_COURSE_USERS + " cu" +
+                " INNER JOIN " + TABLE_COURSE + " c ON cu." + COLUMN_COURSE_NO + " = c." + COLUMN_COURSE_ID +
+                " INNER JOIN " + TABLE_BRANCH + " b ON c." + COLUMN_COURSE_BRANCH_ID + " = b." + COLUMN_BRANCH_ID +
+                " WHERE cu." + COLUMN_USER_ID + " = ?";
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(userId)});
+
+        // Loop through the cursor and populate Course objects with course details
+        if (cursor.moveToFirst()) {
+            do {
+                Course course = new Course();
+                course.setCourseId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_ID)));
+                course.setCourseName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NAME)));
+                course.setCourseCost(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COURSE_COST)));
+                course.setCourseDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_DURATION)));
+                course.setBranchName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_NAME)));
+                course.setRegistrationDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_REGISTRATION_DATE)));
+                // Set other course details as needed
+                coursesList.add(course);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return coursesList;
+    }
+
+
 
 
 }

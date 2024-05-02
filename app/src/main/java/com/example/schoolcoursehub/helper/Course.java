@@ -11,7 +11,8 @@ public class Course {
     private String publishDate;
     private int currentEnrollment;
     private int branchId;
-
+    private String branchName;
+    private String registrationDate;
 
     public Course() {
     }
@@ -117,5 +118,17 @@ public class Course {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+    public String getBranchName(){
+        return branchName;
+    }
+    public void setBranchName(String branchName){
+        this.branchName = branchName;
+    }
+    public String getRegistrationDate(){
+        return registrationDate;
+    }
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }

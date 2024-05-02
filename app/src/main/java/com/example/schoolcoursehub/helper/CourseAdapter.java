@@ -19,9 +19,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private OnCourseCheckedChangeListener listener;
     private double totalFee = 0.0;
 
-    public CourseAdapter(List<Course> courses, OnCourseCheckedChangeListener listener) {
+    public CourseAdapter(List<Course> courses) {
         this.courses = courses;
-        this.listener = listener;
     }
 
 

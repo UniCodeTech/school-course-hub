@@ -1,9 +1,12 @@
 package com.example.schoolcoursehub.user;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -85,7 +88,25 @@ public class UserHome extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Error retrieving courses!", Toast.LENGTH_SHORT).show();
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle item selection
+        if(item.getItemId()==R.id.registered_course){
+            viewRegisteredCourse();
+        }
+        return true;
+    }
 
+    private void viewRegisteredCourse(){
+        Intent intent = new Intent(UserHome.this, ViewRegisteredCourse.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
     }
 }
