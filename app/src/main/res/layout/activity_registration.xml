@@ -25,7 +25,7 @@
                 android:layout_height="150dp"
                 android:layout_marginBottom="24dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/baseline_account_circle_24_50" />
+                android:src="@drawable/baseline_how_to_reg_24" />
 
             <!-- Upload Profile Picture Button -->
             <Button
@@ -35,7 +35,8 @@
                 android:layout_marginBottom="24dp"
                 android:background="@drawable/custom_button"
                 android:text="@string/upload_pro_pic"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone"/>
 
             <!-- Name EditText -->
             <EditText
