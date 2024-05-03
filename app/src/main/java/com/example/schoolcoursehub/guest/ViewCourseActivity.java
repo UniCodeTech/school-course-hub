@@ -52,10 +52,6 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
 
         dbHandler = new DBHandler(this);    // database
 
-        /*mapView = findViewById(R.id.branchMap);
-        // Important: You must call onCreate() on the MapView after acquiring it
-        mapView.onCreate(savedInstanceState);*/
-
         courseNameTextView = findViewById(R.id.courseNameTextView);
         courseCostTextView = findViewById(R.id.courseCostTextView);
         courseDurationTextView = findViewById(R.id.courseDurationTextView);
@@ -79,12 +75,9 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
         }
 
 
-        // get all branch details
-        // get course details
         Course course = dbHandler.fetchCourseDetails(courseId);
         branch = dbHandler.getBranchById(branchId);
-
-        // fill the text box
+        
         if (course != null || branch != null) {
             String enroll = String.valueOf(course.getCurrentEnrollment())+"/"+String.valueOf(course.getMaxParticipants());
             courseNameTextView.setText(course.getCourseName());
