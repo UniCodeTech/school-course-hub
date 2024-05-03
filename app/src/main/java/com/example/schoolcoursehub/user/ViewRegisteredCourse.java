@@ -41,7 +41,7 @@ public class ViewRegisteredCourse extends AppCompatActivity {
         DBHandler dbHandler = new DBHandler(this);
         List<Course> courseDetailsList = dbHandler.getCoursesForUser(userId);
 
-        // Set up the adapter with the retrieved data
+        // Set up the adapter
         adapter = new RegisteredCourseAdapter(courseDetailsList);
         recyclerView.setAdapter(adapter);
 
