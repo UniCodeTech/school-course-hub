@@ -49,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Database", "Database does not exist");
         }
 
-        /*Intent intent = new Intent(MainActivity.this, RegisterNow.class);
-        intent.putExtra("userId", 2);
-        startActivity(intent);*/
-
-
         displayCourses();
     }
 
