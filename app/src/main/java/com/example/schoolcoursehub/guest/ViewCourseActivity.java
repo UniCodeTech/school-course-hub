@@ -77,7 +77,7 @@ public class ViewCourseActivity extends AppCompatActivity implements OnMapReadyC
 
         Course course = dbHandler.fetchCourseDetails(courseId);
         branch = dbHandler.getBranchById(branchId);
-        
+
         if (course != null || branch != null) {
             String enroll = String.valueOf(course.getCurrentEnrollment())+"/"+String.valueOf(course.getMaxParticipants());
             courseNameTextView.setText(course.getCourseName());

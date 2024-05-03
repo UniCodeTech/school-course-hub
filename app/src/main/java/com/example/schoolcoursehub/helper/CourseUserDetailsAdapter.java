@@ -34,7 +34,7 @@ public class CourseUserDetailsAdapter extends RecyclerView.Adapter<CourseUserDet
         holder.textBranch.setText(String.valueOf(courseUserDetails.getBranchName()));
         holder.textRegistrationDate.setText(courseUserDetails.getRegistrationDate());
         holder.textTotalFee.setText(String.valueOf(courseUserDetails.getTotalFee()));
-        // Bind other details as needed
+
     }
 
     @Override
@@ -56,7 +56,6 @@ public class CourseUserDetailsAdapter extends RecyclerView.Adapter<CourseUserDet
             textBranch = itemView.findViewById(R.id.text_branch);
             textRegistrationDate = itemView.findViewById(R.id.text_registration_date);
             textTotalFee = itemView.findViewById(R.id.text_total_fee);
-            // Find other views if needed
         }
     }
 }

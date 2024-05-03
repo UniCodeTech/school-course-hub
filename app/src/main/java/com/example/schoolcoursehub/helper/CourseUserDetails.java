@@ -18,7 +18,6 @@ public class CourseUserDetails {
     public CourseUserDetails() {
     }
 
-    // Getters and setters for all attributes
     // ID
     public int getId() {
         return id;
