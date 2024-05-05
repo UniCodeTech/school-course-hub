@@ -189,7 +189,7 @@ public class DBHandler extends SQLiteOpenHelper {
         String selection = COLUMN_COURSE_ID + " = ?";
         String[] selectionArgs = {String.valueOf(courseId)};
 
-        // Retrieve the current enrollment count from the database
+        // Retrieve the current enrollment count
         int currentEnrollment = 0;
         Cursor cursor = db.query(
                 TABLE_COURSE,
@@ -213,10 +213,10 @@ public class DBHandler extends SQLiteOpenHelper {
         int rowsAffected = db.update(TABLE_COURSE, values, selection, selectionArgs);
         if (rowsAffected > 0) {
             Log.d("DBHandler", "Current enrollment incremented for courseId: " + courseId);
-            return true; // Return true indicating success
+            return true;
         } else {
             Log.e("DBHandler", "Failed to increment current enrollment for courseId: " + courseId);
-            return false; // Return false indicating failure
+            return false;
         }
     }
 
@@ -423,7 +423,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
             cursor = db.query(TABLE_USERS, projection, selection, selectionArgs, null, null, null);
 
-            // Check if the cursor has any rows
             if (cursor != null && cursor.getCount() > 0) {
                 // NIC already exists
                 isUnique = false;
@@ -559,7 +558,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // Getting all branches
     public List<Branch> getAllBranches() {
         List<Branch> branchList = new ArrayList<>();
-        // Select All Query
+
         String selectQuery = "SELECT  * FROM " + TABLE_BRANCH;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -600,7 +599,6 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
-    // TODO: Get all courses
     public List<String> getAllUsers() {
         List<String> userList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -618,7 +616,6 @@ public class DBHandler extends SQLiteOpenHelper {
                     COLUMN_USER_MOBILE_NUMBER
             };
 
-            // Filter results WHERE user_role != 'Admin'
             String selection = COLUMN_USER_ROLE + " != ?";
             String[] selectionArgs = { "Admin" };
 
@@ -632,7 +629,6 @@ public class DBHandler extends SQLiteOpenHelper {
                     null
             );
 
-            // Loop through all rows and add user details to the list
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     String userDetails = "Name: " + cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)) + "\n" +
@@ -658,16 +654,14 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
-    // Method to get all courses from the database
     public List<Course> getAllCourses() {
         List<Course> courseList = new ArrayList<>();
-        // Select All Query
+
         String selectQuery = "SELECT * FROM " + TABLE_COURSE;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // Loop through all rows and add to list
         if (cursor.moveToFirst()) {
             do {
                 Course course = new Course();
@@ -682,16 +676,13 @@ public class DBHandler extends SQLiteOpenHelper {
                 course.setCurrentEnrollment(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CURRENT_ENROLLMENT)));
                 course.setBranchId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_BRANCH_ID)));
 
-                // Adding course to list
                 courseList.add(course);
             } while (cursor.moveToNext());
         }
 
-        // Close cursor and database connection
         cursor.close();
         db.close();
 
-        // Return course list
         return courseList;
     }
 
@@ -754,7 +745,6 @@ public class DBHandler extends SQLiteOpenHelper {
         List<CourseUserDetails> courseUserDetailsList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // Select Query joining COURSE_USERS with COURSE, USERS, and BRANCH tables
         String selectQuery = "SELECT cu.*, c." + COLUMN_COURSE_NAME + ", u." + COLUMN_USER_NAME + ", c." + COLUMN_COURSE_BRANCH_ID + ", c." + COLUMN_COURSE_REGISTRATION_CLOSING_DATE + ", c." + COLUMN_COURSE_STARTING_DATE + ", c." + COLUMN_COURSE_COST + ", b." + COLUMN_BRANCH_NAME +
                 " FROM " + TABLE_COURSE_USERS + " cu" +
                 " INNER JOIN " + TABLE_COURSE + " c ON cu." + COLUMN_COURSE_NO + " = c." + COLUMN_COURSE_ID +
@@ -763,31 +753,25 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // Loop through the cursor and populate CourseUserDetails objects with details from joined tables
         if (cursor.moveToFirst()) {
             do {
                 CourseUserDetails userDetails = new CourseUserDetails();
-                // Set details from COURSE_USERS table
                 userDetails.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_USER_ID)));
                 userDetails.setCourseNo(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NO)));
                 userDetails.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
                 userDetails.setRegistrationDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_REGISTRATION_DATE)));
                 userDetails.setTotalFee(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_TOTAL_FEE)));
 
-                // Set details from joined COURSE table
                 userDetails.setCourseName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_NAME)));
                 userDetails.setBranchId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_COURSE_BRANCH_ID)));
                 userDetails.setRegistrationClosingDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_REGISTRATION_CLOSING_DATE)));
                 userDetails.setStartingDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_STARTING_DATE)));
                 userDetails.setCourseCost(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COURSE_COST)));
 
-                // Set details from joined BRANCH table
                 userDetails.setBranchName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_NAME)));
 
-                // Set details from joined USERS table
                 userDetails.setUserName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)));
 
-                // Add the CourseUserDetails object to the list
                 courseUserDetailsList.add(userDetails);
             } while (cursor.moveToNext());
         }
@@ -800,7 +784,6 @@ public class DBHandler extends SQLiteOpenHelper {
         List<Course> coursesList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // Select Query joining COURSE_USERS with COURSE, BRANCH, and COURSE_USERS tables
         String selectQuery = "SELECT c.*, b." + COLUMN_BRANCH_NAME + ", cu." + COLUMN_USER_REGISTRATION_DATE +
                 " FROM " + TABLE_COURSE_USERS + " cu" +
                 " INNER JOIN " + TABLE_COURSE + " c ON cu." + COLUMN_COURSE_NO + " = c." + COLUMN_COURSE_ID +
@@ -809,7 +792,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(userId)});
 
-        // Loop through the cursor and populate Course objects with course details
         if (cursor.moveToFirst()) {
             do {
                 Course course = new Course();
@@ -819,7 +801,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 course.setCourseDuration(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COURSE_DURATION)));
                 course.setBranchName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BRANCH_NAME)));
                 course.setRegistrationDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_REGISTRATION_DATE)));
-                // Set other course details as needed
+
                 coursesList.add(course);
             } while (cursor.moveToNext());
         }

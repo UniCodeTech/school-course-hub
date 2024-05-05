@@ -26,7 +26,7 @@ import java.util.List;
 public class AddNewCourse extends AppCompatActivity {
     private EditText courseNameEditText, courseCostEditText, courseDurationEditText,
             maxParticipantsEditText, startingDateEditText, registrationClosingDateEditText;
-    private Button registerButton;
+    private Button addButton;
     private TextView errorTextView;
     private Spinner branchSpinner;
     private DBHandler dbHandler;
@@ -47,13 +47,13 @@ public class AddNewCourse extends AppCompatActivity {
         startingDateEditText = findViewById(R.id.startingDateEditText);
         registrationClosingDateEditText = findViewById(R.id.registrationClosingDateEditText);
 
-        registerButton = findViewById(R.id.registerButton);
+        addButton = findViewById(R.id.registerButton);
 
         errorTextView = findViewById(R.id.errorTextView);
 
         branchSpinner = findViewById(R.id.branchSpinner);
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validate()){
