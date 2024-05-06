@@ -128,38 +128,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     // send an email
     private boolean sendVerificationEmail(String emailAddress, String verificationCode) {
-        Email email = new Email();
-
-        String sender = email.getEmail();
-        String pass = email.getPassword();
-
-        try {
-            String verificationEmailSubject = getString(R.string.verification_email_subject);
-            String verificationEmailBody = getString(R.string.verification_email_body, verificationCode);
-
-            GMailSender gmailSender = new GMailSender(sender, pass);
-            SendMailTask sendMailTask = new SendMailTask(gmailSender,
-                    verificationEmailSubject,
-                    verificationEmailBody,
-                    pass,
-                    emailAddress) {
-                @Override
-                protected void onPostExecute(Boolean result) {
-                    if (result) {
-                        // Email sent successfully
-                        Toast.makeText(RegistrationActivity.this, "Verification Email send. Check you email.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // Failed to send email
-                        Toast.makeText(RegistrationActivity.this, "Failed to send email", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            };
-            sendMailTask.execute();
-        } catch (Exception e) {
-            Log.e("SendMail", e.getMessage(), e);
-
-        }
-        return true;
+        // implement email verification part
     }
 
     // Method to display a dialog for entering the verification code

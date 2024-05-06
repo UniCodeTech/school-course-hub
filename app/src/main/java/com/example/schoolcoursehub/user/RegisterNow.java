@@ -215,44 +215,6 @@ public class RegisterNow extends AppCompatActivity {
     }
 
     public boolean sendConfirmEmail() {
-        String emailAddress = db.getUserEmailAddress(userId);
-
-        if (emailAddress == null || emailAddress.isEmpty()) {
-            Log.e("SendConfirmEmail", "User email address is null or empty.");
-            return false;
-        }
-
-        Email email = new Email();
-        String sender = email.getEmail();
-        String pass = email.getPassword();
-
-        try {
-            String confirmationEmailSubject = "Payment Confirmation for " + courseName;
-            String confirmationEmailBody = "Dear User,\n\nThank you for your payment. You have successfully registered for the course \"" + courseName + "\". " +
-                    "The total fee is Rs." + totalFeeAfterDiscount + ". Please keep this email as a payment receipt.\n\nBest regards,\nThe School Course Hub Team";
-
-            GMailSender gmailSender = new GMailSender(sender, pass);
-            SendMailTask sendMailTask = new SendMailTask(gmailSender,
-                    confirmationEmailSubject,
-                    confirmationEmailBody,
-                    pass,
-                    emailAddress) {
-                @Override
-                protected void onPostExecute(Boolean result) {
-                    if (result) {
-                        // Email sent successfully
-                        Log.d("SendConfirmEmail", "Confirmation email sent successfully.");
-                    } else {
-                        // Failed to send email
-                        Log.e("SendConfirmEmail", "Failed to send confirmation email.");
-                    }
-                }
-            };
-            sendMailTask.execute();
-            return true;
-        } catch (Exception e) {
-            Log.e("SendConfirmEmail", e.getMessage(), e);
-            return false;
-        }
+        // Implement sendConfirmEmail
     }
 }
