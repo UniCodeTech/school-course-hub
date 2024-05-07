@@ -294,11 +294,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + "FOREIGN KEY (" + COLUMN_COURSE_BRANCH_ID + ") REFERENCES " + TABLE_BRANCH + "(" + COLUMN_BRANCH_ID + ")"
                 + ")";
 
-        //db.execSQL("ALTER TABLE " + TABLE_COURSE + " RENAME TO temp_" + TABLE_COURSE);
         db.execSQL(CREATE_COURSE_TABLE_NEW);
-
-        //db.execSQL("INSERT INTO " + TABLE_COURSE + " SELECT * FROM temp_" + TABLE_COURSE);
-        //db.execSQL("DROP TABLE temp_" + TABLE_COURSE);
     }
 
 
@@ -496,7 +492,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public UserInfo getUserInfo(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        UserInfo userInfo = new UserInfo(); // Class to hold user ID and role
+        UserInfo userInfo = new UserInfo();
         Cursor cursor = null;
 
         try {
@@ -809,9 +805,5 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return coursesList;
     }
-
-
-
-
 }
 

@@ -146,7 +146,6 @@ public class AddNewCourse extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Set the selected date on the EditText
                         editText.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                     }
                 },
@@ -172,7 +171,6 @@ public class AddNewCourse extends AppCompatActivity {
         String startingDate = startingDateEditText.getText().toString().trim();
         String registrationClosingDate = registrationClosingDateEditText.getText().toString().trim();
 
-        // Check if any field is empty
         if (courseName.isEmpty() || courseCostStr.isEmpty() || courseDuration.isEmpty() ||
                 maxParticipantsStr.isEmpty() || startingDate.isEmpty() || registrationClosingDate.isEmpty()) {
             errorTextView.setText("Please fill in all fields");

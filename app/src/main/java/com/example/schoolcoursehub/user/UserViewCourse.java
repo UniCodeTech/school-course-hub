@@ -85,8 +85,6 @@ public class UserViewCourse extends AppCompatActivity implements OnMapReadyCallb
         }
 
 
-        // get all branch details
-        // get course details
         Course course = dbHandler.fetchCourseDetails(courseId);
         branch = dbHandler.getBranchById(branchId);
 

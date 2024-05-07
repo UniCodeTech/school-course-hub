@@ -29,7 +29,6 @@ public class ViewEnrolledStudent extends AppCompatActivity {
         DBHandler dbHandler = new DBHandler(this);
         List<CourseUserDetails> courseUserDetailsList = dbHandler.getAllCourseUsersWithDetails();
 
-        // Set up the adapter with the retrieved data
         adapter = new CourseUserDetailsAdapter(courseUserDetailsList);
         recyclerView.setAdapter(adapter);
     }

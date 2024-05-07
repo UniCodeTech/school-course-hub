@@ -120,7 +120,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     //generate a verification code
     private String generateVerificationCode() {
-        // Generate a random 6-digit code
         Random random = new Random();
         int verificationCode = 100000 + random.nextInt(900000);
         return String.valueOf(verificationCode);
@@ -131,7 +130,6 @@ public class RegistrationActivity extends AppCompatActivity {
         // implement email verification part
     }
 
-    // Method to display a dialog for entering the verification code
     private void showVerificationDialog(final String verificationCode) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter Verification Code");
@@ -146,13 +144,12 @@ public class RegistrationActivity extends AppCompatActivity {
                 String enteredCode = input.getText().toString().trim();
 
                 if (enteredCode.equals(verificationCode)) {
-                    // Insert user data into the database
                     insertUserDataIntoDatabase();
 
                 } else {
                     // Display an error message
                     Toast.makeText(RegistrationActivity.this, "Incorrect verification code. Please try again.", Toast.LENGTH_SHORT).show();
-                    showVerificationDialog(verificationCode); // Show the dialog again for retry
+                    showVerificationDialog(verificationCode);
                 }
             }
         });
